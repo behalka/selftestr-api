@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# --runInBand option turns on sequential tests run. This prevents one test from
+# wiping out data of another test.
+node_modules/.bin/jest --runInBand

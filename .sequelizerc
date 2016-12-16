@@ -1,0 +1,8 @@
+const path = require('path')
+const basePath = './dist/src'
+
+module.exports = {
+  'config': path.resolve(basePath, 'config/migrations.js'),
+  'migrations-path': path.resolve(basePath, 'database/migrations'),
+  'seeders-path': path.resolve(basePath, 'database/seeders'),
+}

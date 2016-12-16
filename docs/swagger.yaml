@@ -1,0 +1,67 @@
+swagger: '2.0'
+
+info:
+  version: '1.0.0'
+  title: TestProject API
+
+host: 'test-project-api.herokuapp.com'
+basePath: '/'
+securityDefinitions:
+  JWT:
+    type: 'apiKey'
+    in: 'header'
+    name: 'Authorization'
+
+schemes: ['http']
+
+paths:
+
+  # --- USERS ---
+
+  /users:
+    post:
+      summary: Registeres a user
+      description: |
+        Creates a user record and sends `accessToken` with profile details in the
+        response. To use the `accessToken` for subsequent requests set authorization 
+        header like shown below.
+        ```
+        Authorization: ACCESS_TOKEN_VALUE
+        ```
+      parameters:
+        -
+          name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserPost'
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: '#/definitions/UserPostRes'
+        400:
+          description: Bad request
+      tags: ['Users']
+      security: []
+
+definitions:
+
+  UserPost:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+
+  UserPostRes:
+    type: object
+    properties:
+      accessToken: 
+        type: string
+      profile: 
+        type: object
+        properties:
+          email:
+            type: string
