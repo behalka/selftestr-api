@@ -17,7 +17,7 @@ describe('users', () => {
       .expect(201)
 
     expect(res.body).to.have.keys(['accessToken', 'profile'])
-    expect(res.body.profile).to.include.keys(['id', 'email', 'firstName', 'lastName'])
+    expect(res.body.profile).to.include.keys(['id', 'email', 'createdAt', 'updatedAt', 'username'])
   })
 
   it('should return 400 when user record is not valid', () => {

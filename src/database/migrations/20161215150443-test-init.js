@@ -33,7 +33,7 @@ export default {
         allowNull: false,
         references: {
           model: 'users',
-          key: 'id'
+          key: 'id',
         },
         onDelete: 'cascade',
         onUpdate: 'cascade',

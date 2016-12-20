@@ -1,15 +1,10 @@
 export default function(sequelize, DataTypes) {
-  return sequelize.define('Test', {
+  return sequelize.define('test', {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    // wtf velkym pismenem??
-    // prozkoumat express priklad od nich - kdy/jak cizi klice vznikaji
-    // nemaji je v migraci a pouzivaji sync
-    // jak to omezit - mit to v migraci ale ne tady ..
-    // vytvorit nejaky seeders
-    UserId: {
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       field: 'user_id',
@@ -30,7 +25,7 @@ export default function(sequelize, DataTypes) {
     tableName: 'tests',
     classMethods: {
       associate: function(models) {
-        this.belongsTo(models.User)
+        this.belongsTo(models.user)
       },
     },
   })

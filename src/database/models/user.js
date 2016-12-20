@@ -1,5 +1,5 @@
 export default function(sequelize, DataTypes) {
-  return sequelize.define('User', {
+  return sequelize.define('user', {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -24,7 +24,7 @@ export default function(sequelize, DataTypes) {
     tableName: 'users',
     classMethods: {
       associate: function(models) {
-        this.hasMany(models.Test)
+        this.hasMany(models.test)
       },
     },
   })

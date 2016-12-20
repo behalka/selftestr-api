@@ -20,7 +20,4 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize
 db.Sequelize = Sequelize
-db.User.findAll({ include: db.Test }).then((data) => {
-  console.log(data)
-})
 export default db

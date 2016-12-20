@@ -14,6 +14,7 @@ module.exports = {
   // Per-project rules take precedence over rules defined via included
   // configurations.
   rules: {
+    'capitalized-comments': 0,
     'valid-jsdoc': 2,
     'newline-after-var': 0,
     'padded-blocks': 0,
