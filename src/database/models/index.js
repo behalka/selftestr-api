@@ -1,7 +1,11 @@
 import user from './user'
-import test from './test'
+import testModel from './testModel'
+import questionModel from './questionModel'
+import answerModel from './answerModel'
 
 export default {
+  answerModel,
   user,
-  test,
+  questionModel,
+  testModel,
 }

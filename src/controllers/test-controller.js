@@ -30,4 +30,27 @@ export default {
       }
     },
   ]),
+  addQuestion: compose([
+    async ctx => {
+      const body = ctx.request.body
+      const testId = ctx.params.test_id
+      const question = await testService.addQuestion(testId, body)
+      ctx.status = 201
+      ctx.body = {
+        question,
+      }
+    },
+  ]),
+  updateQuestion: compose([
+    async ctx => {
+      console.log('todo')
+      ctx.status = 200
+    },
+  ]),
+  deleteQuestion: compose([
+    async ctx => {
+      console.log('todo')
+      ctx.status = 200
+    },
+  ]),
 }

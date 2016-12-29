@@ -1,12 +1,28 @@
 export default function(sequelize, DataTypes) {
-  return sequelize.define('user', {
-    email: {
-      type: DataTypes.STRING,
+  return sequelize.define('questionModel', {
+    testModelId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
+      field: 'test_id',
     },
-    username: {
+    text: {
       type: DataTypes.STRING,
       allowNull: false,
+      field: 'question_text',
+    },
+    explanation: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: 'question_type',
+    },
+    answer: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: 'answer_text',
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -21,10 +37,10 @@ export default function(sequelize, DataTypes) {
       field: 'updated_at',
     },
   }, {
-    tableName: 'users',
+    tableName: 'question_models',
     classMethods: {
       associate: function(models) {
-        this.hasMany(models.testModel)
+        this.belongsTo(models.testModel)
       },
     },
   })

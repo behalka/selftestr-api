@@ -1,5 +1,5 @@
 export default function(sequelize, DataTypes) {
-  return sequelize.define('test', {
+  return sequelize.define('testModel', {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -22,9 +22,10 @@ export default function(sequelize, DataTypes) {
       field: 'updated_at',
     },
   }, {
-    tableName: 'tests',
+    tableName: 'test_models',
     classMethods: {
       associate: function(models) {
+        this.hasMany(models.questionModel, { foreignKey: 'testModelId' })
         this.belongsTo(models.user)
       },
     },

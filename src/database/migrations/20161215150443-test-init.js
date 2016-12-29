@@ -17,7 +17,7 @@ export default {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
     })
-    .then(() => queryInterface.createTable('tests', {
+    .then(() => queryInterface.createTable('test_models', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -51,7 +51,7 @@ export default {
     }))
   },
   down(queryInterface) {
-    return queryInterface.dropTable('tests')
+    return queryInterface.dropTable('test_models')
     .then(() => queryInterface.dropTable('users'))
   },
 }

@@ -1,0 +1,41 @@
+export default function(sequelize, DataTypes) {
+  return sequelize.define('answerModel', {
+    questionModelId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'question_id',
+    },
+    text: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: 'answer_text',
+    },
+    isCorrect: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: 'is_correct',
+    },
+    correctSolution: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: 'correct_solution',
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      field: 'created_at',
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      field: 'updated_at',
+    },
+  }, {
+    tableName: 'answer_models',
+    classMethods: {
+      associate: function(models) {
+        this.belongsTo(models.questionModel)
+      },
+    },
+  })
+}
