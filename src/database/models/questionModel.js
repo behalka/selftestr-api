@@ -3,7 +3,7 @@ export default function(sequelize, DataTypes) {
     testModelId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: 'test_id',
+      field: 'test_model_id',
     },
     text: {
       type: DataTypes.STRING,
@@ -19,11 +19,6 @@ export default function(sequelize, DataTypes) {
       allowNull: false,
       field: 'question_type',
     },
-    answer: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      field: 'answer_text',
-    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
@@ -37,7 +32,7 @@ export default function(sequelize, DataTypes) {
       field: 'updated_at',
     },
   }, {
-    tableName: 'question_models',
+    tableName: 'question_model',
     classMethods: {
       associate: function(models) {
         this.belongsTo(models.testModel)

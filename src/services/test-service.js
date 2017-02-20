@@ -4,12 +4,18 @@ import db from '../database'
 
 export default {
   getAll() {
-    return db.testModel.findAll({ include: [db.questionModel] })
+    return db.testModels.findAll({
+      include: [{ model: db.questionModels, attributes: [] }],
+      group: ['testModel.id'],
+      attributes: {
+        include: [[db.sequelize.fn('COUNT', db.sequelize.col('questionModel.id')), 'questionsCount']],
+      },
+    })
   },
   async get(id) {
     const test = await db.testModel.findOne({
       where: { id },
-      include: [db.questionModel],
+      include: [{ model: db.questionModel }],
     })
     if (!test) {
       throw new errors.NotFoundError('E_NOTFOUND_TEST', `Test with id ${id} does not exist.`)

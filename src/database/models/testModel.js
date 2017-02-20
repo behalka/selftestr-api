@@ -22,7 +22,7 @@ export default function(sequelize, DataTypes) {
       field: 'updated_at',
     },
   }, {
-    tableName: 'test_models',
+    tableName: 'test_model',
     classMethods: {
       associate: function(models) {
         this.hasMany(models.questionModel, { foreignKey: 'testModelId' })

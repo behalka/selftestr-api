@@ -1,5 +1,5 @@
 {
-  "name": "koa-2-simple",
+  "name": "selftestr-api",
   "version": "1.0.0",
   "dependencies": {
     "@strv/eslint-config-javascript": {
@@ -5293,6 +5293,11 @@
       "version": "3.0.1",
       "from": "uuid@>=3.0.1 <4.0.0",
       "resolved": "https://registry.npmjs.org/uuid/-/uuid-3.0.1.tgz"
+    },
+    "uuid-v4": {
+      "version": "0.1.0",
+      "from": "uuid-v4@latest",
+      "resolved": "https://registry.npmjs.org/uuid-v4/-/uuid-v4-0.1.0.tgz"
     },
     "v8flags": {
       "version": "2.0.11",

@@ -2,13 +2,18 @@
 
 export default {
   up(queryInterface, Sequelize) {
-    return queryInterface.createTable('question_models', {
-      id: { allowNull: false, autoIncrement: true, primaryKey: true, type: Sequelize.INTEGER },
-      test_id: {
-        type: Sequelize.INTEGER,
+    return queryInterface.createTable('question_model', {
+      id: {
+        allowNull: false,
+        primaryKey: true,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+      },
+      test_model_id: {
+        type: Sequelize.UUID,
         allowNull: false,
         references: {
-          model: 'test_models',
+          model: 'test_model',
           key: 'id',
         },
         onDelete: 'cascade',
@@ -41,6 +46,6 @@ export default {
     })
   },
   down(queryInterface) {
-    return queryInterface.dropTable('question_models')
+    return queryInterface.dropTable('question_model')
   },
 }

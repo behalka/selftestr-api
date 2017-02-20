@@ -21,7 +21,7 @@ export default function(sequelize, DataTypes) {
       field: 'updated_at',
     },
   }, {
-    tableName: 'users',
+    tableName: 'user',
     classMethods: {
       associate: function(models) {
         this.hasMany(models.testModel)

@@ -1,16 +1,17 @@
 /* eslint-disable camelcase */
+import { nextUuid } from '../helper'
 
 export default {
   up(queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('users', [
+    return queryInterface.bulkInsert('user', [
       {
         username: 'tester',
         email: 'test@test.com',
-        id: 1,
+        id: nextUuid('user'),
       },
     ], {})
   },
   down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete('test_model', null, {})
+    return queryInterface.bulkDelete('user', null, {})
   },
 }

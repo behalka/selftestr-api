@@ -1,7 +1,10 @@
 import Sequelize from 'sequelize'
 import config from '../config/index'
 import models from './models'
+import pg from 'pg'
 
+/* aggregate functions return integer instead of a string if possible */
+pg.defaults.parseInt8 = true
 const sequelize = new Sequelize(config.database.connectionString, config.database.options)
 
 // Import all models

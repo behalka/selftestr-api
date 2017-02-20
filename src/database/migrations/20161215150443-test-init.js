@@ -2,8 +2,13 @@
 
 export default {
   up(queryInterface, Sequelize) {
-    return queryInterface.createTable('users', {
-      id: { allowNull: false, autoIncrement: true, primaryKey: true, type: Sequelize.INTEGER },
+    return queryInterface.createTable('user', {
+      id: {
+        allowNull: false,
+        primaryKey: true,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+      },
       username: { allowNull: false, type: Sequelize.STRING, unique: true },
       email: { allowNull: false, type: Sequelize.STRING, unique: true },
       created_at: {
@@ -17,22 +22,22 @@ export default {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
     })
-    .then(() => queryInterface.createTable('test_models', {
+    .then(() => queryInterface.createTable('test_model', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
       },
       name: {
         allowNull: false,
         type: Sequelize.STRING,
       },
       user_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
         references: {
-          model: 'users',
+          model: 'user',
           key: 'id',
         },
         onDelete: 'cascade',
@@ -51,7 +56,7 @@ export default {
     }))
   },
   down(queryInterface) {
-    return queryInterface.dropTable('test_models')
-    .then(() => queryInterface.dropTable('users'))
+    return queryInterface.dropTable('test_model')
+    .then(() => queryInterface.dropTable('user'))
   },
 }

@@ -3,7 +3,7 @@ export default function(sequelize, DataTypes) {
     questionModelId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: 'question_id',
+      field: 'question_model_id',
     },
     text: {
       type: DataTypes.STRING,
@@ -31,7 +31,7 @@ export default function(sequelize, DataTypes) {
       field: 'updated_at',
     },
   }, {
-    tableName: 'answer_models',
+    tableName: 'answer_model',
     classMethods: {
       associate: function(models) {
         this.belongsTo(models.questionModel)
