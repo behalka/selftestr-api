@@ -1,7 +1,13 @@
 export default function(sequelize, DataTypes) {
   return sequelize.define('questionModel', {
+    id: {
+      primaryKey: true,
+      allowNull: false,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+    },
     testModelId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false,
       field: 'test_model_id',
     },

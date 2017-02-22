@@ -1,5 +1,11 @@
 export default function(sequelize, DataTypes) {
   return sequelize.define('user', {
+    id: {
+      primaryKey: true,
+      allowNull: false,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+    },    
     email: {
       type: DataTypes.STRING,
       allowNull: false,
