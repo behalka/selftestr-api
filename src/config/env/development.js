@@ -4,6 +4,7 @@ export default {
       dialectOptions: {
         ssl: false,
       },
+      logging: console.log,
     },
   },
 }
