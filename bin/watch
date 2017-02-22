@@ -1,0 +1,7 @@
+#!/bin/sh
+
+node_modules/.bin/nodemon \
+  --watch ./src \
+  --exec "node_modules/.bin/gulp compile \
+          && node "$@" dist/src/server | node_modules/.bin/bunyan"
+  
