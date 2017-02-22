@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/src/server.js",
+  "engines": {
+    "node": "7.6.0",
+    "npm": "~4.3"
+  },
   "directories": {
     "start": "node .",
     "doc": "docs",
