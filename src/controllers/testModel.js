@@ -43,16 +43,4 @@ export default {
   getComments: compose([
     // ...
   ]),
-  // todo: presunout do questionModel controlleru
-  addQuestion: compose([
-    async ctx => {
-      const body = ctx.request.body
-      const testId = ctx.params.test_id
-      const question = await testService.addQuestion(testId, body)
-      ctx.status = 201
-      ctx.body = {
-        question,
-      }
-    },
-  ]),
 }

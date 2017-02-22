@@ -6,23 +6,30 @@ import service from '../services/question-service'
 export default {
   get: compose([
     async ctx => {
-      const body = ctx.request.body
-      const questionId = ctx.params.questionId
-      console.log(questionId)
-      // const question = await service.add(testId, body)
+      const questionId = ctx.params.question_id
+      const testId = ctx.params.test_id
+
+      const question = await service.get(questionId, testId)
       ctx.status = 201
       ctx.body = {
-        foo: 4
-        // question,
+        question,
       }
-    }
+    },
   ]),
-  list: compose([]),
+  list: compose([
+    async ctx => {
+      const testId = ctx.params.test_id
+
+      const questionsPerTest = await service.getAllPerTest(testId)
+      ctx.status = 200
+      ctx.body = questionsPerTest
+    },
+  ]),
   add: compose([
     async ctx => {
       const body = ctx.request.body
       const testId = ctx.params.test_id
-      console.log(testId)
+
       const question = await service.add(testId, body)
       ctx.status = 201
       ctx.body = {
@@ -31,7 +38,15 @@ export default {
     },
   ]),
   update: compose([]),
-  delete: compose([]),
+  delete: compose([
+    async ctx => {
+      const questionId = ctx.params.question_id
+      const testId = ctx.params.test_id
+
+      const res = await service.delete(questionId, testId)
+      ctx.status = 200
+    }
+  ]),
   /**
    * Answers will be managed from here
    */

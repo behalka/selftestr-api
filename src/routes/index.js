@@ -14,7 +14,9 @@ router.post('/users', controllers.user.register)
 router.post('/users/reset-password', controllers.user.resetPassword)
 
 // Test models - questions
+router.get('/tests/:test_id/questions', controllers.questionModel.list)
 router.post('/tests/:test_id/questions', controllers.questionModel.add)
+router.get('/tests/:test_id/questions/:question_id', controllers.questionModel.get)
 router.delete('/tests/:test_id/questions/:question_id', controllers.questionModel.delete)
 router.patch('/tests/:test_id/questions/:question_id', controllers.questionModel.update)
 
