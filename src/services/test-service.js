@@ -4,11 +4,14 @@ import db from '../database'
 
 export default {
   getAll() {
-    return db.testModels.findAll({
-      include: [{ model: db.questionModels, attributes: [] }],
+    return db.testModel.findAll({
+      include: [{ model: db.questionModel, attributes: [] }],
       group: ['testModel.id'],
       attributes: {
-        include: [[db.sequelize.fn('COUNT', db.sequelize.col('questionModel.id')), 'questionsCount']],
+        include: [[db.sequelize.fn('COUNT',
+          db.sequelize.col('questionModels.id')),
+          'questionsCount',
+        ]],
       },
     })
   },
@@ -28,13 +31,5 @@ export default {
       throw new errors.NotFoundError('E_NOTFOUND_TEST', `User ${test.userId} does not exist.`)
     }
     return db.testModel.create(test, { include: [db.questionModel] })
-  },
-  async addQuestion(testId, question) {
-    // todo: spolecne s otazkou se musi vytvorit i sada odpovedi
-    const test = await db.testModel.findOne({ where: { id: testId } })
-    if (!test) {
-      throw new errors.NotFoundError('E_NOTFOUND_TEST', `Test id ${testId} does not exist.`)
-    }
-    return db.questionModel.create({ ...question, testId: test.id })
   },
 }

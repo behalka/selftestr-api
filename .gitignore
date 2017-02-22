@@ -11,4 +11,4 @@ dist
 # Local configuration
 .env
 
-.npm-debug.log
+npm-debug.log

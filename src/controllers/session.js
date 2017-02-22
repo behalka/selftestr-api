@@ -16,4 +16,10 @@ export default {
       ctx.status = 201
     },
   ]),
+  revalidate: compose([
+    // provide revalidated token
+  ]),
+  destroy: compose([
+    // logout the user
+  ]),
 }

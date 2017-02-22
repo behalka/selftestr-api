@@ -1,11 +1,13 @@
-import session from './session-controller'
-import status from './status-controller'
-import user from './user-controller'
-import test from './test-controller'
+import session from './session'
+import status from './status'
+import user from './user'
+import testModel from './testModel'
+import questionModel from './questionModel'
 
 export default {
   session,
   status,
-  test,
+  testModel,
+  questionModel,
   user,
 }

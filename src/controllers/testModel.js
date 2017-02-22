@@ -3,6 +3,12 @@ import middleware from '../middleware'
 import schema from '../validation/schema'
 import testService from '../services/test-service'
 
+/**
+ * todo:
+ * pristupova prava
+ * zamykani editace
+ * pagination
+ */
 export default {
   get: compose([
     async ctx => {
@@ -30,6 +36,14 @@ export default {
       }
     },
   ]),
+  update: compose([]),
+  getMetadata: compose([
+    // returns description, metadata of an test
+  ]),
+  getComments: compose([
+    // ...
+  ]),
+  // todo: presunout do questionModel controlleru
   addQuestion: compose([
     async ctx => {
       const body = ctx.request.body
@@ -39,18 +53,6 @@ export default {
       ctx.body = {
         question,
       }
-    },
-  ]),
-  updateQuestion: compose([
-    async ctx => {
-      console.log('todo')
-      ctx.status = 200
-    },
-  ]),
-  deleteQuestion: compose([
-    async ctx => {
-      console.log('todo')
-      ctx.status = 200
     },
   ]),
 }
