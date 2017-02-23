@@ -28,6 +28,7 @@ export default {
       {
         id: nextUuid('answerModel'),
         question_model_id: getUuid('questionModel', 0),
+        answer_text: 'YES',
         is_correct: true,
         correct_solution: 'foo',
       },

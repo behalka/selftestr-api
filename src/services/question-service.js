@@ -5,10 +5,13 @@ import db from '../database'
 export default {
   async get(id, testId) {
     const question = await db.questionModel
-    .findOne({ where: {
-      id,
-      testModelId: testId,
-    } })
+    .findOne({
+      where: {
+        id,
+        testModelId: testId,
+      },
+      include: [{ model: db.answerModel }],
+    })
     if (!question) {
       throw new errors.NotFoundError('E_NOTFOUND_QUESTION',
       `Question id ${id} not found under test id ${testId}`)
@@ -34,22 +37,44 @@ export default {
     }
     return db.questionModel.create({ ...question, testModelId: test.id })
   },
-  /**
-   * Deletes a question. If deleting is not successfull, throws an error.
-   * 
-   * @param {string} id
-   * @param {string} testId
-   */
   async delete(id, testId) {
     const cnt = await db.questionModel.destroy({
       where: {
         id,
-        testModelId: testId
-      }
+        testModelId: testId,
+      },
     })
-    if(cnt < 1) {
-      throw new errors.NotFoundError('E_NOTFOUND_QUESTION', `Question id ${id} not found in test ${testId}`)
+    if (cnt < 1) {
+      throw new
+        errors.NotFoundError('E_NOTFOUND_QUESTION', `Question id ${id} not found in test ${testId}`)
     }
-    return
-  }
+  },
+  async createAnswers(id, answers) {
+    const question = await db.questionModel.findOne({ where: { id }})
+    if (!question) {
+      throw new errors.NotFoundError('E_NOTFOUND_QUESTION', `Question id ${id} was not found`)
+    }
+    // todo: this does not work - a bug with fields renaming
+    // return db.answerModel.bulkCreate(input)
+    // this is all a workaround - or we can remove the timestamps..
+    const input = answers.map(answer => ({ ...answer, questionModelId: id }))
+    return Promise.all(input.map(async answer => {
+      const prom = await db.answerModel.create(answer)
+      return prom
+    }))
+  },
+  async updateAnswers(id, answers) {
+    const question = await db.questionModel.findOne({ where: { id }})
+    if (!question) {
+      throw new errors.NotFoundError('E_NOTFOUND_QUESTION', `Question id ${id} was not found`)
+    }
+    const input = answers.map(answer => ({ ...answer, questionModelId: id }))
+    return Promise.all(input.map(async answer => {
+      const prom = await db.answerModel.update(answer, {
+        where: { id: answer.id },
+        returning: true,
+      })
+      return prom
+    }))
+  },
 }

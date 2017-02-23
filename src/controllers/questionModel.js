@@ -45,7 +45,23 @@ export default {
 
       const res = await service.delete(questionId, testId)
       ctx.status = 200
-    }
+    },
+  ]),
+  setAnswers: compose([
+    async ctx => {
+      const body = ctx.request.body
+      const questionId = ctx.params.question_id
+
+      // todo: resolve deleted answers ..
+      const answersToUpdate = body.filter(answer => answer.id)
+      const answersToAdd = body.filter(answer => !answer.id)
+
+      const created = await service.createAnswers(questionId, answersToAdd)
+      const res = await service.updateAnswers(questionId, answersToUpdate)
+      const updated = res[0][1]
+      ctx.status = 201
+      ctx.body = created.concat(updated)
+    },
   ]),
   /**
    * Answers will be managed from here

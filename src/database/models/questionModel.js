@@ -41,6 +41,7 @@ export default function(sequelize, DataTypes) {
     tableName: 'question_model',
     classMethods: {
       associate: function(models) {
+        this.hasMany(models.answerModel, { foreignKey: 'questionModelId' })
         this.belongsTo(models.testModel)
       },
     },
