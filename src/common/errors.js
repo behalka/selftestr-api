@@ -45,6 +45,7 @@ class ConflictError extends ApiError {
 }
 
 module.exports = {
+  ApiError,
   InternalServerError,
   UnauthorizedError,
   ForbiddenError,
