@@ -1,9 +1,9 @@
-import log from '../common/logger'
-import * as errors from '../common/errors'
-import db from '../database'
+const log = require('../common/logger')
+const errors = require('../common/errors')
+const db = require('../database')
 
-export default {
-  getAll() {
+module.exports = {
+  getAll: () => {
     return db.testModel.findAll({
       include: [{ model: db.questionModel, attributes: [] }],
       group: ['testModel.id'],
@@ -15,7 +15,7 @@ export default {
       },
     })
   },
-  async get(id) {
+  get: async id => {
     const test = await db.testModel.findOne({
       where: { id },
       include: [{ model: db.questionModel }],
@@ -25,11 +25,18 @@ export default {
     }
     return test
   },
-  async createTest(test) {
+  createTest: async test => {
     const owner = await db.user.findOne({ id: test.userId })
     if (!owner) {
       throw new errors.NotFoundError('E_NOTFOUND_TEST', `User ${test.userId} does not exist.`)
     }
     return db.testModel.create(test, { include: [db.questionModel] })
+  },
+  generate: async testModelId => {
+    /**
+     * generates testInstance from testModel -> copies and prepares everything
+     * nutno definovat nejdriv modely...budou tam navic udaje o vysledku
+     */
+    
   },
 }

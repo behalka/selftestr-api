@@ -1,7 +1,7 @@
-import * as sessions from './sessions'
-import * as users from './users'
+const sessions = require('./sessions')
+const users = require('./users')
 
-export default {
+module.exports = {
   sessions,
   users,
 }

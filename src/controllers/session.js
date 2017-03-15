@@ -1,8 +1,8 @@
-import compose from 'koa-compose'
-import middleware from '../middleware'
-import schema from '../validation/schema'
+const compose = require('koa-compose')
+const middleware = require('../middleware')
+const schema = require('../validation/schema')
 
-export default {
+module.exports = {
 
   /**
    * Creates a new user access token.

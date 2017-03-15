@@ -1,4 +1,4 @@
-export default function(sequelize, DataTypes) {
+module.exports = (sequelize, DataTypes) => {
   return sequelize.define('answerModel', {
     id: {
       primaryKey: true,

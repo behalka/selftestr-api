@@ -1,9 +1,9 @@
-import compose from 'koa-compose'
-import middleware from '../middleware'
-import schema from '../validation/schema'
-import service from '../services/question-service'
+const compose = require('koa-compose')
+const middleware = require('../middleware')
+const schema = require('../validation/schema')
+const service = require('../services/question-service')
 
-export default {
+module.exports = {
   get: compose([
     async ctx => {
       const questionId = ctx.params.question_id

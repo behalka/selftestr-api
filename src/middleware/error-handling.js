@@ -1,31 +1,7 @@
-import uuid from 'uuid'
-import log from '../common/logger'
-import config from '../config'
-import * as errors from '../common/errors'
-
-export default {
-
-  /**
-   * Global error handler which formats thrown errors to client friendly JSON
-   * @param {Object} ctx Koa context
-   * @param {Function} middleware Reference to the next middleware
-   * @returns {void}
-   */
-  async handleErrors(ctx, middleware) {
-    try {
-      await middleware()
-    } catch (err) {
-
-      // Known error, we threw it
-      if (err instanceof errors.ApiError) {
-        return void processKnownError(ctx, err)
-      }
-
-      // Unknown error
-      processUnknownError(ctx, err)
-    }
-  },
-}
+const uuid = require('uuid')
+const log = require('../common/logger')
+const config = require('../config')
+const errors = require('../common/errors')
 
 function processKnownError(ctx, err) {
   ctx.status = err.status || 500
@@ -57,4 +33,27 @@ function processUnknownError(ctx, err) {
     message: err.message,
     stacktrace: err.stacktrace,
   }
+}
+
+module.exports = {
+  /**
+   * Global error handler which formats thrown errors to client friendly JSON
+   * @param {Object} ctx Koa context
+   * @param {Function} middleware Reference to the next middleware
+   * @returns {void}
+   */
+  handleErrors: async (ctx, middleware) => {
+    try {
+      await middleware()
+    } catch (err) {
+
+      // Known error, we threw it
+      if (err instanceof errors.ApiError) {
+        return void processKnownError(ctx, err)
+      }
+
+      // Unknown error
+      processUnknownError(ctx, err)
+    }
+  },
 }

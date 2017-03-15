@@ -1,16 +1,16 @@
-import joi from 'joi'
-import Promise from 'bluebird'
-import log from '../common/logger'
-import * as errors from '../common/errors'
+const joi = require('joi')
+const Promise = require('bluebird')
+const log = require('../common/logger')
+const errors = require('../common/errors')
 
-export default {
+module.exports = {
 
   /**
    * Validates request body and fills request
    * @param {Object} schema Joi validation schema used for body validation
    * @returns {void}
    */
-  validateBody(schema) {
+  validateBody: schema => {
     return async (ctx, middleware) => {
       log.info({ body: ctx.request.body }, 'Incoming body')
 

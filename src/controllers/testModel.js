@@ -1,7 +1,7 @@
-import compose from 'koa-compose'
-import middleware from '../middleware'
-import schema from '../validation/schema'
-import testService from '../services/test-service'
+const compose = require('koa-compose')
+const middleware = require('../middleware')
+const schema = require('../validation/schema')
+const testService = require('../services/test-service')
 
 /**
  * todo:
@@ -9,7 +9,7 @@ import testService from '../services/test-service'
  * zamykani editace
  * pagination
  */
-export default {
+module.exports = {
   get: compose([
     async ctx => {
       const test = await testService.get(ctx.params.test_id)

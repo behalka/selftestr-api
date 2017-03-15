@@ -1,10 +1,10 @@
-import log from './../common/logger'
-import config from './../config'
+const log = require('./../common/logger')
+const config = require('./../config')
 
 // This is initialized during server start
 const start = new Date()
 
-export default {
+module.exports = {
 
   /**
    * Sends info about status of the server.

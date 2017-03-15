@@ -1,12 +1,12 @@
-import Koa from 'koa'
-import koaBody from 'koa-body'
-import koaCompress from 'koa-compress'
-import koaCors from 'kcors'
+const Koa = require('koa')
+const koaBody = require('koa-body')
+const koaCompress = require('koa-compress')
+const koaCors = require('kcors')
 
-import config from './config'
-import log from './common/logger'
-import routes from './routes/index'
-import middleware from './middleware'
+const config = require('./config')
+const log = require('./common/logger')
+const routes = require('./routes/index')
+const middleware = require('./middleware/index')
 
 const app = new Koa()
 
@@ -32,4 +32,4 @@ app.start = () => {
   })
 }
 
-export default app
+module.exports = app

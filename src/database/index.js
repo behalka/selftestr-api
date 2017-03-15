@@ -1,7 +1,7 @@
-import Sequelize from 'sequelize'
-import config from '../config/index'
-import models from './models'
-import pg from 'pg'
+const Sequelize = require('sequelize')
+const config = require('../config/index')
+const models = require('./models')
+const pg = require('pg')
 
 /* aggregate functions return integer instead of a string if possible */
 pg.defaults.parseInt8 = true
@@ -23,4 +23,4 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize
 db.Sequelize = Sequelize
-export default db
+module.exports = db

@@ -1,12 +1,11 @@
-import compose from 'koa-compose'
-import log from '../common/logger'
-import middleware from '../middleware'
-import schema from '../validation/schema'
-import crypto from '../utils/crypto'
-import userService from '../services/user-service'
+const compose = require('koa-compose')
+const log = require('../common/logger')
+const middleware = require('../middleware')
+const schema = require('../validation/schema')
+const crypto = require('../utils/crypto')
+const userService = require('../services/user-service')
 
-export default {
-
+module.exports = {
   /**
    * Creates a new user account based on sent credentials.
    * @param {Object} ctx Koa context

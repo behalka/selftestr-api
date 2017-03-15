@@ -1,10 +1,10 @@
-import session from './session'
-import status from './status'
-import user from './user'
-import testModel from './testModel'
-import questionModel from './questionModel'
+const session = require('./session')
+const status = require('./status')
+const user = require('./user')
+const testModel = require('./testModel')
+const questionModel = require('./questionModel')
 
-export default {
+module.exports = {
   session,
   status,
   testModel,

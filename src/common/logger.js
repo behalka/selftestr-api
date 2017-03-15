@@ -1,5 +1,5 @@
-import bunyan from 'bunyan'
-import config from '../config'
+const bunyan = require('bunyan')
+const config = require('../config')
 
 const logStreams = []
 
@@ -17,4 +17,4 @@ const logger = bunyan.createLogger({
   streams: logStreams,
 })
 
-export default logger
+module.exports = logger

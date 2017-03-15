@@ -1,5 +1,5 @@
-import Router from 'koa-router'
-import controllers from '../controllers/index'
+const Router = require('koa-router')
+const controllers = require('../controllers/index')
 
 const router = new Router()
 
@@ -28,4 +28,4 @@ router.post('/tests', controllers.testModel.create)
 router.patch('/tests/:test_id', controllers.testModel.update)
 
 const routes = router.routes()
-export default routes
+module.exports = routes

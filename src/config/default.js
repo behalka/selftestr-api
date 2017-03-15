@@ -1,8 +1,8 @@
 /* eslint-disable no-process-env */
 
-import pkg from '../../package'
+const pkg = require('../../package')
 
-export default {
+module.exports = {
   appName: 'selftestr-api',
   version: pkg.version,
   port: process.env.PORT || 3000,

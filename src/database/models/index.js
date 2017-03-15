@@ -1,9 +1,9 @@
-import user from './user'
-import testModel from './testModel'
-import questionModel from './questionModel'
-import answerModel from './answerModel'
+const user = require('./user')
+const testModel = require('./testModel')
+const questionModel = require('./questionModel')
+const answerModel = require('./answerModel')
 
-export default {
+module.exports = {
   answerModel,
   user,
   questionModel,

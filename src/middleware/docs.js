@@ -1,9 +1,9 @@
-import compose from 'koa-compose'
-import koaStatic from 'koa-static2'
-import Router from 'koa-router'
-import path from 'path'
+const compose = require('koa-compose')
+const koaStatic = require('koa-static2')
+const Router = require('koa-router')
+const path = require('path')
 
-export default compose([
+module.exports = compose([
 
   // Redirect /docs --> /docs/index.html
   new Router().redirect('/docs', '/docs/index.html').routes(),

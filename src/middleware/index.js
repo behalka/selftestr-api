@@ -1,9 +1,9 @@
-import errorHandling from './error-handling'
-import auth from './authorization'
-import validation from './validation'
-import docs from './docs'
+const errorHandling = require('./error-handling')
+const auth = require('./authorization')
+const validation = require('./validation')
+const docs = require('./docs')
 
-export default {
+module.exports = {
   errors: errorHandling,
   auth,
   docs,

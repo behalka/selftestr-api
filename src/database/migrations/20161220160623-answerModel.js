@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-export default {
+module.exports = {
   up(queryInterface, Sequelize) {
     return queryInterface.createTable('answer_model', {
       id: {

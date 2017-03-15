@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { nextUuid, getUuid } from '../helper'
 
-export default {
+module.exports = {
   up(queryInterface, Sequelize) {
     return queryInterface.bulkInsert('test_model', [
       {
