@@ -3,6 +3,8 @@ const middleware = require('../middleware')
 const schema = require('../validation/schema')
 const testService = require('../services/test-service')
 
+const data = require('../utils/data/testInstance')
+
 module.exports = {
   get: compose([
     /**
@@ -14,11 +16,17 @@ module.exports = {
      * ....
      */
   ]),
+  /*
+  * generate a test with given params
+  * from a testModel, store it and return it
+  */
   create: compose([
-    /** 
-    * generate a test with given params
-    * from a testModel, store it and return it
-    */
+    ctx => {
+      const testModelId = ctx.params.test_model_id
+      // params: test na okopirovani, auth
+      ctx.status = 200
+      ctx.body = Object.assign({}, data.test, { testModelId })
+    },
   ]),
   evaluate: compose([
     /**

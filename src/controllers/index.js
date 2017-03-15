@@ -3,6 +3,7 @@ const status = require('./status')
 const user = require('./user')
 const testModel = require('./testModel')
 const questionModel = require('./questionModel')
+const testInstance = require('./testInstance')
 
 module.exports = {
   session,
@@ -10,4 +11,5 @@ module.exports = {
   testModel,
   questionModel,
   user,
+  testInstance,
 }
