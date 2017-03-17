@@ -1,13 +1,25 @@
-/* eslint-disable camelcase */
-
 module.exports = {
-  up(queryInterface, Sequelize) {
-    return queryInterface.createTable('question_model', {
+  up: (queryInterface, Sequelize) =>
+    queryInterface.createTable('test_instance', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
+      },
+      name: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      user_id: {
+        type: Sequelize.UUID,
+        allowNull: false,
+        references: {
+          model: 'user',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       test_model_id: {
         type: Sequelize.UUID,
@@ -16,20 +28,8 @@ module.exports = {
           model: 'test_model',
           key: 'id',
         },
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
-      },
-      question_text: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      explanation: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      question_type: {
-        allowNull: false,
-        type: Sequelize.ENUM('singlechoice', 'multichoice', 'text_input'),
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
       },
       created_at: {
         allowNull: false,
@@ -41,9 +41,6 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-    })
-  },
-  down(queryInterface) {
-    return queryInterface.dropTable('question_model')
-  },
+    }),
+  down: queryInterface => queryInterface.dropTable('test_instance'),
 }

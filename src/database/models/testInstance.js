@@ -1,30 +1,24 @@
-module.exports = (sequelize, DataTypes) => {
-  return sequelize.define('answerModel', {
+module.exports = (sequelize, DataTypes) =>
+  sequelize.define('testInstance', {
     id: {
       primaryKey: true,
       allowNull: false,
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
-    },    
-    questionModelId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      field: 'question_model_id',
     },
-    text: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      field: 'answer_text',
-    },
-    isCorrect: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
-      field: 'is_correct',
     },
-    correctSolution: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      field: 'correct_solution',
+    userId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      field: 'user_id',
+    },
+    testModelId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      field: 'test_model_id',
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -39,11 +33,13 @@ module.exports = (sequelize, DataTypes) => {
       field: 'updated_at',
     },
   }, {
-    tableName: 'answer_model',
+    tableName: 'test_instance',
     classMethods: {
       associate: function(models) {
-        this.belongsTo(models.questionModel)
+        // this.hasMany(models.questionModel, { foreignKey: 'testModelId' })
+        this.belongsTo(models.testModel)
       },
     },
   })
-}
+
+
