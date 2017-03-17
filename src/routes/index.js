@@ -37,7 +37,10 @@ router.use(testModels.routes())
 const testInstances = new Router({
   prefix: 'tests',
 })
-testInstances.post('/:test_model_id', controllers.testInstance.create)
+testInstances.get('/models/:test_model_id', controllers.testInstance.generate)
+testInstances.get('/:test_instance_id', controllers.testInstance.get)
+testInstances.post('/', controllers.testInstance.add)
+testInstances.put('/:test_instance_id', controllers.testInstance.save)
 router.use(testInstances.routes())
 
 const routes = router.routes()

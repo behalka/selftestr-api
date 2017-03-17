@@ -1,16 +1,23 @@
 const compose = require('koa-compose')
 const middleware = require('../middleware')
 const schema = require('../validation/schema')
-const testService = require('../services/test-service')
+const testService = require('../services/testInstance-service')
+const log = require('../common/logger')
 
 const data = require('../utils/data/testInstance')
 
 module.exports = {
   get: compose([
+    async ctx => {
+      const id = ctx.params.test_instance_id
+      const testInstace = await testService.get(id)
+      ctx.status = 200
+      ctx.body = testInstace
+    },
+  ]),
     /**
      * return resolved tests ---> history
      */
-  ]),
   getByUser: compose([
     /**
      * ....
@@ -20,12 +27,32 @@ module.exports = {
   * generate a test with given params
   * from a testModel, store it and return it
   */
-  create: compose([
-    ctx => {
+  generate: compose([
+    async ctx => {
       const testModelId = ctx.params.test_model_id
-      // params: test na okopirovani, auth
+      const instance = await testService.generate(testModelId)
+
       ctx.status = 200
-      ctx.body = Object.assign({}, data.test, { testModelId })
+      ctx.body = instance
+    },
+  ]),
+  /*
+   * Adds and saves a test instance that was generated via client.
+   */
+  add: compose([
+    ctx => {
+      const testInstance = ctx.request.body
+      log.debug(testInstance, 'saving generated')
+      ctx.status = 201
+    },
+  ]),
+  /*
+   * updates/saves already created test instance
+   */
+  save: compose([
+    ctx => {
+      log.debug('test instance saved')
+      ctx.status = 200
     },
   ]),
   evaluate: compose([

@@ -32,11 +32,4 @@ module.exports = {
     }
     return db.testModel.create(test, { include: [db.questionModel] })
   },
-  generate: async testModelId => {
-    /**
-     * generates testInstance from testModel -> copies and prepares everything
-     * nutno definovat nejdriv modely...budou tam navic udaje o vysledku
-     */
-    
-  },
 }
