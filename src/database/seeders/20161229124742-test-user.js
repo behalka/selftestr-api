@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { nextUuid } from '../helper'
+const uuidHelper = require('../helper')
 
 module.exports = {
   up(queryInterface, Sequelize) {
@@ -7,7 +7,7 @@ module.exports = {
       {
         username: 'tester',
         email: 'test@test.com',
-        id: nextUuid('user'),
+        id: uuidHelper.nextUuid('user'),
       },
     ], {})
   },
