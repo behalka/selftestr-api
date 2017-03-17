@@ -15,32 +15,32 @@ class InternalServerError extends ApiError {
 }
 
 class ValidationError extends ApiError {
-  constructor(type = 'E_VALIDATION', message = 'Validation did not passed.') {
-    super(type, message, 400)
+  constructor(message = 'Validation did not pass.') {
+    super('E_VALIDATION', message, 400)
   }
 }
 
 class UnauthorizedError extends ApiError {
-  constructor(type = 'E_UNAUTHORIZED', message = 'The user was not authorized.') {
-    super(type, message, 401)
+  constructor(message = 'The user was not authorized.') {
+    super('E_UNAUTHORIZED', message, 401)
   }
 }
 
 class ForbiddenError extends ApiError {
-  constructor(type = 'E_FORBIDDEN', message = 'The user is not allowed to access this resource.') {
-    super(type, message, 403)
+  constructor(message = 'The user is not allowed to access this resource.') {
+    super('E_FORBIDDEN', message, 403)
   }
 }
 
 class NotFoundError extends ApiError {
-  constructor(type = 'E_NOT_FOUND', message = 'Target resource was not found.') {
-    super(type, message, 404)
+  constructor(message = 'Target resource was not found.') {
+    super('E_NOT_FOUND', message, 404)
   }
 }
 
 class ConflictError extends ApiError {
-  constructor(type = 'E_CONFLICT', message = 'Conflict record found.') {
-    super(type, message, 409)
+  constructor(message = 'Conflict record found.') {
+    super('E_CONFLICT', message, 409)
   }
 }
 

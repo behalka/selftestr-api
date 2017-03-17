@@ -22,7 +22,7 @@ module.exports = {
         ctx.request.validatedBody = result
       } catch (err) {
         log.warn(err, 'Request validation error.')
-        throw new errors.ValidationError()
+        throw new errors.ValidationError(err.message)
       }
 
       // Run next middleware
