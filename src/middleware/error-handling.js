@@ -27,11 +27,10 @@ function processUnknownError(ctx, err) {
     }
     return
   }
-
   // Not production environment, include error info
   ctx.body = {
     message: err.message,
-    stacktrace: err.stacktrace,
+    stacktrace: err.stack,
   }
 }
 
