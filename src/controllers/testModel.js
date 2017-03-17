@@ -1,6 +1,6 @@
 const compose = require('koa-compose')
-const middleware = require('../middleware')
-const schema = require('../validation/schema')
+const middleware = require('../middleware/index')
+const schema = require('../validation/schema/index')
 const testService = require('../services/test-service')
 
 /**
@@ -26,6 +26,7 @@ module.exports = {
     },
   ]),
   create: compose([
+    middleware.validation.validateBody(schema.testModels.create),
     async ctx => {
       const body = ctx.request.body
       const test = await testService.createTest(body)

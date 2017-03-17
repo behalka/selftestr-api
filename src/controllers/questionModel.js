@@ -1,6 +1,6 @@
 const compose = require('koa-compose')
-const middleware = require('../middleware')
-const schema = require('../validation/schema')
+const middleware = require('../middleware/index')
+const schema = require('../validation/schema/index')
 const service = require('../services/question-service')
 
 module.exports = {
@@ -26,6 +26,7 @@ module.exports = {
     },
   ]),
   add: compose([
+    middleware.validation.validateBody(schema.questionModels.addQuestion),
     async ctx => {
       const body = ctx.request.body
       const testId = ctx.params.test_id
@@ -48,6 +49,7 @@ module.exports = {
     },
   ]),
   setAnswers: compose([
+    middleware.validation.validateBody(schema.questionModels.setAnswers),
     async ctx => {
       const body = ctx.request.body
       const questionId = ctx.params.question_id
