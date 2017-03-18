@@ -1,11 +1,13 @@
-module.exports = (sequelize, DataTypes) => {
-  return sequelize.define('user', {
+const crypto = require('../../utils/crypto')
+
+module.exports = (sequelize, DataTypes) =>
+  sequelize.define('user', {
     id: {
       primaryKey: true,
       allowNull: false,
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
-    },    
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -13,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
     username: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    password: {
+      allowNull: true,
+      type: DataTypes.STRING,
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -33,5 +39,9 @@ module.exports = (sequelize, DataTypes) => {
         this.hasMany(models.testModel)
       },
     },
+    hooks: {
+      async beforeCreate(user) {
+        user.password = await crypto.hashPassword(user.password)
+      },
+    },
   })
-}

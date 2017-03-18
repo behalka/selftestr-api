@@ -7,6 +7,7 @@ module.exports = {
       {
         username: 'tester',
         email: 'test@test.com',
+        password: 'password',
         id: uuidHelper.nextUuid('user'),
       },
     ], {})

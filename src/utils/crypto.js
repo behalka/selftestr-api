@@ -12,15 +12,15 @@ const config = require('../config')
  */
 function pepperify(string) {
   return crypto
-    .createHmac('sha1', config.auth.pepper)
+    .createHmac('sha1', new Buffer(config.auth.pepper))
     .update(string)
     .digest('hex')
 }
 
 module.exports = {
-  generateAccessToken: userId => {
-    const payload = { userId }
-    return jwt.sign(payload, config.auth.pepper, { expiresIn: config.auth.expiration })
+  generateAccessToken: (userId, username) => {
+    const payload = { userId, username }
+    return jwt.sign(payload, config.auth.tokenSecret, { expiresIn: config.auth.expiration })
   },
   hashPassword: password => {
     return Promise.fromCallback(done =>

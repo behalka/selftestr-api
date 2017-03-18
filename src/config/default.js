@@ -7,10 +7,12 @@ module.exports = {
   version: pkg.version,
   port: process.env.PORT || 3000,
   auth: {
-    salt: process.env.PEPPER || 'long_enough_random_string',
+    pepper: process.env.PEPPER || 'also_a_long_string',
+    // salt: process.env.SALT || 'long_enough_random_string',
     saltRounds: 10,
     resetPasswordTokenLength: 20,
     tokenExpiration: 2 * 60 * 60, // 2 hours (in seconds)
+    tokenSecret: process.env.TOKEN_SECRET || 'also_a_long_string',
   },
   database: {
     options: {
