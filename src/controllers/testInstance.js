@@ -30,7 +30,8 @@ module.exports = {
   generate: compose([
     async ctx => {
       const testModelId = ctx.params.test_model_id
-      const instance = await testService.generate(testModelId)
+      const user = ctx.request.user
+      const instance = await testService.generate(testModelId, user ? user.id : null)
 
       ctx.status = 200
       ctx.body = instance
