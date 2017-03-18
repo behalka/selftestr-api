@@ -26,19 +26,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       field: 'correct_solution',
     },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: new Date(),
-      field: 'created_at',
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: new Date(),
-      field: 'updated_at',
-    },
   }, {
+    timestamps: false,
     tableName: 'answer_model',
     classMethods: {
       associate: function(models) {

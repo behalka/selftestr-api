@@ -7,6 +7,8 @@ module.exports = {
       {
         id: uuidHelper.nextUuid('testModel'),
         name: 'Predloha testu 1',
+        time_limit: 60000,
+        description: 'dolor sit amet',
         user_id: uuidHelper.getUuid('user', 0),
       },
     ], {})

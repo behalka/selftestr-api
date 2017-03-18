@@ -18,7 +18,7 @@ module.exports = {
   get: async id => {
     const test = await db.testModel.findOne({
       where: { id },
-      include: [{ model: db.questionModel }],
+      include: [{ model: db.questionModel, include: [db.answerModel] }],
     })
     if (!test) {
       throw new errors.NotFoundError('E_NOTFOUND_TEST', `Test with id ${id} does not exist.`)

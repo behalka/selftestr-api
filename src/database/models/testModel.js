@@ -15,6 +15,18 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       field: 'user_id',
     },
+    questionsPerTestInstance: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 10,
+      field: 'questions_per_test_instance',
+    },
+    timeLimit: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: null,
+      field: 'time_limit',
+    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,

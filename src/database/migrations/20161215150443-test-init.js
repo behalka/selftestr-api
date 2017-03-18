@@ -33,6 +33,20 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      description: {
+        allowNull: false,
+        type: Sequelize.TEXT,
+      },
+      time_limit: {
+        allowNull: true,
+        defaultValue: null,
+        type: Sequelize.INTEGER,
+      },
+      questions_per_test_instance: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        defaultValue: 10,
+      },
       user_id: {
         type: Sequelize.UUID,
         allowNull: false,
