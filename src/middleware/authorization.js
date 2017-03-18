@@ -29,7 +29,7 @@ module.exports = {
     async (ctx, middleware) => {
       const authorization = ctx.headers.authorization
       if (!authorization) {
-        await middleware()
+        return middleware()
       }
       const payload = await parseToken(ctx, authorization)
       ctx.request.user = await setUser(payload)
