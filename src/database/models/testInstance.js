@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) =>
     tableName: 'test_instance',
     classMethods: {
       associate: function(models) {
-        // this.hasMany(models.questionModel, { foreignKey: 'testModelId' })
+        this.hasMany(models.questionInstance, { foreignKey: 'testInstanceId' })
         this.belongsTo(models.testModel)
       },
     },

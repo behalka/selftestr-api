@@ -7,6 +7,7 @@ module.exports = {
   get: async id => {
     const instance = await db.testInstance.findOne({
       where: { id },
+      include: [{ model: db.questionInstance, include: [db.answerInstance] }],
     })
     return instance
   },
@@ -17,7 +18,7 @@ module.exports = {
     const instance = await db.testInstance.create({
       testModelId,
       name,
-      userId: '73ccd9e5-c019-410b-80b9-daaded0abb5a',
+      userId: 'feb794de-c6c0-4b35-92f7-37aee0890b75',
     })
     return instance
   },

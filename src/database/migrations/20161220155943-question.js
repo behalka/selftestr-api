@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+const questionTypes = require('../enums/questionTypes')
 
 module.exports = {
   up(queryInterface, Sequelize) {
@@ -29,7 +30,7 @@ module.exports = {
       },
       question_type: {
         allowNull: false,
-        type: Sequelize.ENUM('singlechoice', 'multichoice', 'text_input'),
+        type: Sequelize.ENUM(...questionTypes),
       },
       created_at: {
         allowNull: false,

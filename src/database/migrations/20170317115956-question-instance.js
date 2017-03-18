@@ -1,3 +1,5 @@
+const questionTypes = require('../enums/questionTypes')
+
 module.exports = {
   up: (queryInterface, Sequelize) =>
     queryInterface.createTable('question_instance', {
@@ -17,7 +19,12 @@ module.exports = {
       },
       question_type: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.ENUM(...questionTypes),
+      },
+      answered_correctly: {
+        allowNull: true,
+        type: Sequelize.BOOLEAN,
+        defaultValue: null,
       },
       test_instance_id: {
         type: Sequelize.UUID,

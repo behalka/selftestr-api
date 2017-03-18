@@ -5,6 +5,9 @@ const uuids = {
   testModel: [],
   answerModel: [],
   questionModel: [],
+  testInstance: [],
+  questionInstance: [],
+  answerInstance: [],
 }
 
 const indices = {}
