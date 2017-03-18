@@ -1,11 +1,25 @@
 const compose = require('koa-compose')
 const log = require('../common/logger')
-const middleware = require('../middleware')
-const schema = require('../validation/schema')
+const middleware = require('../middleware/index')
+const errors = require('../common/errors')
+const schema = require('../validation/schema/index')
 const crypto = require('../utils/crypto')
 const userService = require('../services/user-service')
 
 module.exports = {
+  login: compose([
+    middleware.validation.validateBody(schema.users.login),
+    async ctx => {
+      const { username, password } = ctx.request.validatedBody
+      const user = await userService.getByUsername(username)
+      if (!await crypto.comparePasswords(password, user.password)) {
+        throw new errors.UnauthorizedError(`Incorrect password for ${username}`)
+      }
+      const token = await crypto.generateAccessToken(user.id, username)
+      ctx.status = 200
+      ctx.body = { token }
+    },
+  ]),
   /**
    * Creates a new user account based on sent credentials.
    * @param {Object} ctx Koa context

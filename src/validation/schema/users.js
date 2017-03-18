@@ -11,4 +11,8 @@ module.exports = {
   resetPassword: joi.object().keys({
     email: joi.string().required(),
   }),
+  login: joi.object().keys({
+    username: joi.string().required(),
+    password: joi.string().required(),
+  }),
 }

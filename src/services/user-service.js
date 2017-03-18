@@ -17,5 +17,11 @@ module.exports = {
     // Create database record
     return db.user.create(user)
   },
-
+  getByUsername: async username => {
+    const user = await db.user.findOne({ where: { username } })
+    if (!user) {
+      throw new errors.NotFoundError(`Username ${username} not found.`)
+    }
+    return user
+  },
 }

@@ -1,5 +1,6 @@
 const Router = require('koa-router')
 const controllers = require('../controllers/index')
+const middleware = require('../middleware/index')
 
 const router = new Router()
 
@@ -10,6 +11,7 @@ router.get('/', controllers.status.getStatus)
 router.post('/sessions', controllers.session.create)
 
 // Users
+router.post('/login', controllers.user.login)
 router.post('/users', controllers.user.register)
 router.post('/users/reset-password', controllers.user.resetPassword)
 
@@ -31,16 +33,25 @@ questionModels.delete('/:question_id', controllers.questionModel.delete)
 questionModels.patch('/:question_id', controllers.questionModel.update)
 
 testModels.use('/:test_id/questions', questionModels.routes())
-router.use(testModels.routes())
+
+router.use(middleware.auth.isLogged(), testModels.routes())
 
 /* Test instances */
 const testInstances = new Router({
   prefix: 'tests',
 })
-testInstances.get('/models/:test_model_id', controllers.testInstance.generate)
-testInstances.get('/:test_instance_id', controllers.testInstance.get)
-testInstances.post('/', controllers.testInstance.add)
-testInstances.put('/:test_instance_id', controllers.testInstance.save)
+/* Vygenerovat novy test */
+testInstances.get('/models/:test_model_id',
+  middleware.auth.fetchUser(), controllers.testInstance.generate)
+/* Ziskat detail testu do historie */
+testInstances.get('/:test_instance_id',
+  middleware.auth.isLogged(), controllers.testInstance.get)
+/* Vygenerovany test pomoci mob. klienta */
+testInstances.post('/',
+  middleware.auth.fetchUser(), controllers.testInstance.add)
+/* Ulozit vysledek testu */
+testInstances.put('/:test_instance_id',
+  middleware.auth.fetchUser(), controllers.testInstance.save)
 router.use(testInstances.routes())
 
 const routes = router.routes()
