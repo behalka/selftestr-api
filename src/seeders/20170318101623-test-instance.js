@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const uuidHelper = require('../helper')
+const uuidHelper = require('./helper')
 
 module.exports = {
   up(queryInterface) {
