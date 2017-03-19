@@ -1,25 +1,9 @@
-import Chance from 'chance'
-
-const chance = new Chance()
-
-export default {
-
-  user: () => ({
-    firstName: chance.first(),
-    lastName: chance.last(),
-    email: chance.email(),
-    username: chance.name(),
-    password: chance.word({ length: 10 }),
-  }),
-
-  login: () => ({
-    email: chance.email(),
-    username: chance.name(),
-    password: chance.word({ length: 10 }),
-  }),
-
-  test: () => ({
-    name: chance.word(),
-    userId: chance.integer(),
-  }),
+module.exports = {
+  generate: modelName => {
+    // todo: bulkCreate modelName rows..
+    // zavisly model si vytvori i ten nadrazeny dle potreby.. bude to tam hodne
+  },
+  clean: modelName => {
+    // destroy modelName, count with cascade rules ...
+  }
 }

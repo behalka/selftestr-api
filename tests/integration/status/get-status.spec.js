@@ -1,6 +1,6 @@
-import request from 'supertest-koa-agent'
-import app from '../../../src/app'
-import { expect } from '../../common/chai'
+const request = require('supertest-koa-agent')
+const app = require('../../../src/app')
+const expect = require('../../common/chai').expect
 
 describe('status', () => {
   it('should return version of the app', async () => {

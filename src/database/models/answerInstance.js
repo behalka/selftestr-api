@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) =>
       defaultValue: DataTypes.UUIDV4,
     },
     questionInstanceId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false,
       field: 'question_instance_id',
     },
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) =>
     },
     isSelected: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
       defaultValue: null,
       field: 'is_selected',
     },

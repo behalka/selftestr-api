@@ -1,7 +1,7 @@
-import chai from 'chai'
-import chaiAsPromised from 'chai-as-promised'
+const chai = require('chai')
 
 // Allows assertions on promises
-chai.use(chaiAsPromised)
+chai.use(require('chai-as-promised'))
+chai.use(require('dirty-chai'))
 
-export default chai
+module.exports = chai

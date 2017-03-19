@@ -1,11 +1,14 @@
 /* eslint-disable no-process-env */
 
-export default {
+module.exports = {
   logging: {
     stdout: {
       enabled: true,
       level: 'error',
     },
+  },
+  auth: {
+    tokenExpiration: 5, // 5 seconds
   },
   database: {
     options: {

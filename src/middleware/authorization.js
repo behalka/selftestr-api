@@ -7,7 +7,7 @@ function parseToken(ctx, authorization) {
   // Pokud tam hlavicka je, tak musi byt validni
   let payload
   try {
-    payload = jwt.verify(authorization, config.auth.tokenSecret)
+    payload = jwt.verify(authorization, config.auth.tokenSecret, { ignoreExpiration: false })
   } catch (err) {
     throw new errors.UnauthorizedError('Invalid access token')
   }

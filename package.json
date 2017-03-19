@@ -46,6 +46,7 @@
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
     "chance": "^1.0.4",
+    "dirty-chai": "^1.2.2",
     "dotenv": "^2.0.0",
     "eslint": "^3.11.0",
     "gulp": "^3.9.1",
@@ -54,8 +55,10 @@
     "gulp-eslint": "^3.0.1",
     "gulp-sourcemaps": "^2.2.1",
     "jest": "^17.0.3",
+    "mocha": "^3.2.0",
     "nodemon": "^1.11.0",
     "sequelize-cli": "^2.5.0",
+    "supertest": "https://registry.npmjs.org/supertest/-/supertest-2.0.1.tgz",
     "supertest-koa-agent": "^0.3.0"
   },
   "scripts": {

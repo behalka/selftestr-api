@@ -5,9 +5,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
-    },    
+    },
     questionModelId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false,
       field: 'question_model_id',
     },
