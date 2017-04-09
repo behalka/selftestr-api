@@ -20,7 +20,6 @@ function pepperify(string) {
 module.exports = {
   generateAccessToken: (userId, username) => {
     const payload = { userId, username }
-    
     return jwt.sign(payload, config.auth.tokenSecret, { expiresIn: config.auth.tokenExpiration })
   },
   hashPassword: password => {
