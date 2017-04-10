@@ -17,8 +17,6 @@ router.post('/users/reset-password', controllers.user.resetPassword)
 
 /* Test models */
 const testModels = new Router()
-testModels.get('/', controllers.testModel.list)
-testModels.get('/:test_id', controllers.testModel.get)
 testModels.post('/', controllers.testModel.create)
 testModels.patch('/:test_id', controllers.testModel.update)
 
@@ -33,6 +31,12 @@ questionModels.patch('/:question_id', controllers.questionModel.update)
 testModels.use('/:test_id/questions', questionModels.routes())
 
 router.use('/editor', middleware.auth.isLogged(), testModels.routes())
+
+/* TestModels - basic */
+const tests = new Router()
+tests.get('/tests', controllers.testModel.list)
+tests.get('/tests/:test_id', controllers.testModel.get)
+router.use(tests.routes())
 
 /* Test instances */
 const testInstances = new Router({
