@@ -2,6 +2,7 @@ const Koa = require('koa')
 const koaBody = require('koa-body')
 const koaCompress = require('koa-compress')
 const koaCors = require('kcors')
+const koaQs = require('koa-qs')
 
 const config = require('./config')
 const log = require('./common/logger')
@@ -15,6 +16,8 @@ app.use(koaCompress())
 app.use(koaBody({ multipart: true }))
 app.use(koaCors({ origin: '*' }))
 app.use(middleware.errors.handleErrors)
+// query string parser
+koaQs(app)
 
 // Serve documentation
 if (config.env !== 'production') {
