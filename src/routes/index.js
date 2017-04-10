@@ -48,6 +48,9 @@ testInstances.get('/models/:test_model_id',
 /* Ziskat detail testu do historie */
 testInstances.get('/:test_instance_id',
   middleware.auth.isLogged(), controllers.testInstance.get)
+/* Ziskat agregovany vysledek pro instanci */
+testInstances.get('/:test_instance_id/result',
+  middleware.auth.isLogged(), controllers.testInstance.getResult)
 /* Vygenerovany test pomoci mob. klienta */
 testInstances.post('/',
   middleware.auth.fetchUser(), controllers.testInstance.add)

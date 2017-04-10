@@ -15,6 +15,28 @@ module.exports = {
       ctx.body = testInstace
     },
   ]),
+  getResult: compose([
+    async ctx => {
+      const id = ctx.params.test_instance_id
+      const testInstace = await testService.get(id)
+      const correct = testInstace.questionInstances.reduce((acc, question) =>
+        question.answeredCorrectly ? acc + 1 : acc, 0)
+      const failed = testInstace.questionInstances.reduce((acc, question) =>
+        question.answeredCorrectly === false || question.answeredCorrectly === null
+        ? acc + 1
+        : acc,
+        0)
+      const result = {
+        correct,
+        failed,
+        takenAt: testInstace.updatedAt,
+        id: testInstace.id,
+        testModelId: testInstace.testModelId,
+      }
+      ctx.status = 200
+      ctx.body = result
+    },
+  ]),
     /**
      * return resolved tests ---> history
      */

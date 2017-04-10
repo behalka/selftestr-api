@@ -22,6 +22,12 @@ module.exports = (sequelize, DataTypes) =>
       type: DataTypes.STRING,
       allowNull: true,
     },
+    answeredCorrectly: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: null,
+      field: 'answered_correctly',
+    },
     type: {
       type: DataTypes.ENUM(...questionTypes),
       allowNull: false,
