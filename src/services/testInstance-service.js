@@ -16,11 +16,23 @@ module.exports = {
   generate: async (testModelId, userId) => {
     const testModel = await testModelService.get(testModelId)
     /* data neccessary for test instance entity */
-    const { name } = testModel
-    const instance = await db.testInstance.create({
+    const testInstance = Object.assign({}, testModel.get({ plain: true }))
+    testInstance.questionInstances = testInstance.questionModels.map(question => {
+      delete question.id
+      question.answerInstances = question.answerModels.map(answer => {
+        delete answer.id
+        return answer
+      })
+      delete question.answerModels
+      return question
+    })
+    delete testInstance.questionModels
+    delete testInstance.id
+    const instance = await db.testInstance.create(Object.assign({}, testInstance, {
       testModelId,
-      name,
       userId,
+    }), {
+      include: [{ model: db.questionInstance, include: [db.answerInstance] }],
     })
     const completeInstance = await getById(instance.id)
     return completeInstance
