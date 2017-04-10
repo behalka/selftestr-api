@@ -13,8 +13,10 @@ async function getById(id) {
 
 module.exports = {
   get: getById,
-  generate: async (testModelId, userId) => {
+  generate: async (testModelId, userId, questionsCount) => {
     const testModel = await testModelService.get(testModelId)
+    /* todo -> questionsCount param will override default that is set in the testModel */
+    log.info(questionsCount, 'override this')
     /* data neccessary for test instance entity */
     const testInstance = Object.assign({}, testModel.get({ plain: true }))
     testInstance.questionInstances = testInstance.questionModels.map(question => {

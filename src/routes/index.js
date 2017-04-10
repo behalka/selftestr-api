@@ -36,6 +36,9 @@ router.use('/editor', middleware.auth.isLogged(), testModels.routes())
 const tests = new Router()
 tests.get('/testModels', controllers.testModel.list)
 tests.get('/testModels/:test_id', controllers.testModel.getDetails)
+tests.post('/testModels/:test_id/rating', controllers.testModel.addRating)
+tests.post('/testModels/:test_id/comment',
+  middleware.auth.isLogged(), controllers.testModel.addComment)
 router.use(tests.routes())
 
 /* Test instances */

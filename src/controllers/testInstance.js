@@ -52,8 +52,10 @@ module.exports = {
   generate: compose([
     async ctx => {
       const testModelId = ctx.params.test_model_id
+      // todo: query validation on this
+      const questionsCount = ctx.query.questions
       const user = ctx.request.user
-      const instance = await testService.generate(testModelId, user ? user.id : null)
+      const instance = await testService.generate(testModelId, user ? user.id : null, questionsCount)
 
       ctx.status = 200
       ctx.body = instance

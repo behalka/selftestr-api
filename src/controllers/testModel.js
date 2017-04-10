@@ -51,6 +51,7 @@ module.exports = {
   ]),
   list: compose([
     async ctx => {
+      // todo: query validation - custom middleware
       const { find, sort } = ctx.query
       console.log(find, sort) // query params to perform the search
       const tests = await testService.getAll()
@@ -79,10 +80,21 @@ module.exports = {
     },
   ]),
   update: compose([]),
-  getMetadata: compose([
-    // returns description, metadata of an test
+  // fixme: !
+  addRating: compose([
+    async ctx => {
+      const testId = ctx.params.test_id
+      ctx.status = 201
+    },
   ]),
-  getComments: compose([
-    // ...
+  addComment: compose([
+    async ctx => {
+      const testId = ctx.params.test_id
+      ctx.status = 200
+      // fixme: return comment
+      ctx.body = {
+        testId,
+      }
+    },
   ]),
 }
