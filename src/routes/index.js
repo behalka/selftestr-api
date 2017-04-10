@@ -34,8 +34,8 @@ router.use('/editor', middleware.auth.isLogged(), testModels.routes())
 
 /* TestModels - basic */
 const tests = new Router()
-tests.get('/tests', controllers.testModel.list)
-tests.get('/tests/:test_id', controllers.testModel.get)
+tests.get('/testModels', controllers.testModel.list)
+tests.get('/testModels/:test_id', controllers.testModel.get)
 router.use(tests.routes())
 
 /* Test instances */
