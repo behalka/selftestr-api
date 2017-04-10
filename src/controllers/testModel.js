@@ -54,8 +54,16 @@ module.exports = {
       const { find, sort } = ctx.query
       console.log(find, sort) // query params to perform the search
       const tests = await testService.getAll()
+      let testsWithScore = tests.map(test => test.get({ plain: true }))
+      testsWithScore = testsWithScore.map(test => {
+        test.review = {
+          stars: 4.2,
+          count: 123,
+        }
+        return test
+      })
       ctx.status = 200
-      ctx.body = tests
+      ctx.body = testsWithScore
     },
   ]),
   create: compose([
