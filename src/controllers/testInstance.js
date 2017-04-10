@@ -80,6 +80,44 @@ module.exports = {
       ctx.status = 200
     },
   ]),
+  update: compose([
+    ctx => {
+      const updatedInstance = ctx.request.body
+      const test = {
+        id: 'test-instance-id',
+        questionInstances: [
+          {
+            id: 'abcd',
+            answeredCorrectly: true,
+            answerInstances: [
+              {
+                id: 'answer-abcd',
+                isCorrect: true,
+                isSelected: true,
+              },
+              {
+                id: 'answer-abcd2',
+                isCorrect: false,
+                isSelected: false,
+              },
+            ],
+          },
+          {
+            id: 'abcd2',
+            answeredCorrectly: false,
+            answerInstances: [
+              {
+                id: 'cvbnm',
+                isCorrect: true,
+                correctSolution: 'foobar',
+                userInput: 'not_foobar',
+              },
+            ],
+          },
+        ],
+      }
+    },
+  ]),
   evaluate: compose([
     /**
      * get results for a test and send them back

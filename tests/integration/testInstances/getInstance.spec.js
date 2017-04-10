@@ -26,7 +26,7 @@ describe('GET /tests/:test_instance_id - get test instance', () => {
     expect(questions).to.be.instanceof(Array)
     expect(questions.length).to.equal(1)
     expect(questions[0]).to.contain.all
-      .keys(['id', 'text', 'explanation', 'testInstanceId', 'type', 'answerInstances'])
+      .keys(['id', 'text', 'explanation', 'testInstanceId', 'type', 'answerInstances', 'answeredCorrectly'])
     expect(_.omit(questions[0], 'answerInstances')).to.eql(helpers.testInstance.getQuestions()[0])
     const answers = questions[0].answerInstances
     expect(answers).to.be.instanceof(Array)

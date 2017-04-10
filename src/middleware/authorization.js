@@ -25,6 +25,9 @@ async function setUser(payload) {
 }
 
 module.exports = {
+  /*
+   * Populates ctx.request.user field
+   */
   fetchUser: () =>
     async (ctx, middleware) => {
       const authorization = ctx.headers.authorization
@@ -35,6 +38,10 @@ module.exports = {
       ctx.request.user = await setUser(payload)
       await middleware()
     },
+  /*
+   * Populates ctx.request.user field
+   * Throws error if user is not found 
+   */
   isLogged: () =>
     async (ctx, middleware) => {
       const authorization = ctx.headers.authorization

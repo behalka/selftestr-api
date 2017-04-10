@@ -15,6 +15,7 @@ const modelQuestionInstance = {
   text: 'Zneni otazky..',
   explanation: 'Vysvetleni otazky..',
   type: 'singlechoice',
+  answeredCorrectly: null,
 }
 const modelAnswerInstances = [
   {
