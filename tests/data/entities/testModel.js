@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 const db = require('../../../src/database/index')
 const userHelper = require('./user')
+const log = require('../../../src/common/logger')
 
 const user = userHelper.getModelUser()
 const modelTest = {
@@ -14,7 +15,12 @@ const modelTest = {
 module.exports = {
   getModelTest: (props = {}) => Object.assign({}, modelTest, props),
   create: async (props = {}) => {
-    await db.user.create(user)
+    try {
+      await db.user.create(user)
+    } catch (err) {
+      // error is swallowed
+      log.warn(err, 'did not create user')
+    }
     return db.testModel.create(Object.assign({}, modelTest, props))
   },
   clean: () => db.testModel.sync({ force: true }),

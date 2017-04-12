@@ -31,7 +31,7 @@ describe('GET /tests/:test_instance_id - get test instance', () => {
     const answers = questions[0].answerInstances
     expect(answers).to.be.instanceof(Array)
     expect(answers.length).to.equal(2)
-    expect(answers[0]).to.contain.all.keys(['id', 'questionInstanceId', 'text', 'isSelected', 'isCorrect'])
+    expect(answers[0]).to.contain.all.keys(['id', 'questionInstanceId', 'text', 'isSelected', 'isCorrect', 'userInput'])
     expect(answers).to.eql(helpers.testInstance.getAnswers())
   })
   it('returns 404 if we are trying to generate from unknown test model', async () => {

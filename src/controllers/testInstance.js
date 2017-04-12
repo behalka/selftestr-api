@@ -1,6 +1,6 @@
 const compose = require('koa-compose')
-const middleware = require('../middleware')
-const schema = require('../validation/schema')
+const middleware = require('../middleware/index')
+const schema = require('../validation/schema/index')
 const testService = require('../services/testInstance-service')
 const log = require('../common/logger')
 
@@ -65,57 +65,32 @@ module.exports = {
    * Adds and saves a test instance that was generated via client.
    */
   add: compose([
-    ctx => {
-      const testInstance = ctx.request.body
-      log.debug(testInstance, 'saving generated')
+    middleware.validation.validateBody(schema.testInstances.addTestInstance),
+    async ctx => {
+      const payload = ctx.request.validatedBody
+      const user = ctx.request.user
+
+      const instance = await testService.add(Object.assign({}, payload, {
+        userId: user.id ? user.id : null,
+      }))
       ctx.status = 201
+      ctx.body = instance
     },
   ]),
   /*
    * updates/saves already created test instance
    */
   save: compose([
-    ctx => {
-      log.debug('test instance saved')
+    middleware.validation.validateBody(schema.testInstances.saveResults),
+    async ctx => {
+      const user = ctx.request.user
+      const updates = ctx.request.validatedBody
+      const testId = ctx.params.test_instance_id
+      const testUpdates = Object.assign({}, updates, { id: testId })
+      const result = await testService.update(testUpdates, user)
+
       ctx.status = 200
-    },
-  ]),
-  update: compose([
-    ctx => {
-      const updatedInstance = ctx.request.body
-      const test = {
-        id: 'test-instance-id',
-        questionInstances: [
-          {
-            id: 'abcd',
-            answeredCorrectly: true,
-            answerInstances: [
-              {
-                id: 'answer-abcd',
-                isCorrect: true,
-                isSelected: true,
-              },
-              {
-                id: 'answer-abcd2',
-                isCorrect: false,
-                isSelected: false,
-              },
-            ],
-          },
-          {
-            id: 'abcd2',
-            answeredCorrectly: false,
-            answerInstances: [
-              {
-                id: 'cvbnm',
-                isCorrect: true,
-                correctSolution: 'foobar',
-                userInput: 'not_foobar',
-              },
-            ],
-          },
-        ],
-      }
+      ctx.body = result
     },
   ]),
   evaluate: compose([

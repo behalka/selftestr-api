@@ -26,6 +26,11 @@ module.exports = (sequelize, DataTypes) =>
       allowNull: true,
       field: 'correct_solution',
     },
+    userInput: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: 'user_input',
+    },
     isSelected: {
       type: DataTypes.BOOLEAN,
       allowNull: true,

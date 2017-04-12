@@ -24,6 +24,7 @@ const modelAnswerInstances = [
     text: 'ANO',
     correctSolution: null,
     isSelected: null,
+    userInput: null,
     isCorrect: true,
   },
   {
@@ -32,6 +33,7 @@ const modelAnswerInstances = [
     text: 'NE',
     correctSolution: null,
     isSelected: null,
+    userInput: null,
     isCorrect: false,
   },
 ]
