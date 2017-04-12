@@ -14,7 +14,7 @@ describe('POST /users - register a user', () => {
     .send(user)
     .expect(201)
 
-    expect(res.body).to.have.keys(['accessToken', 'profile'])
+    expect(res.body).to.have.keys(['token', 'profile'])
     expect(res.body.profile).to.include.keys(['id', 'email', 'createdAt', 'updatedAt', 'username'])
     expect(res.body.profile).to.not.include.keys(['password'])
     expect(res.body.profile.email).to.equal(user.email)

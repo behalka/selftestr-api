@@ -40,8 +40,8 @@ const modelAnswerInstances = [
 
 module.exports = {
   getModelTest: (props = {}) => Object.assign({}, modelTestInstance, props),
-  getQuestions: () => [modelQuestionInstance],
-  getAnswers: () => modelAnswerInstances,
+  getQuestions: () => [Object.assign({}, modelQuestionInstance)],
+  getAnswers: () => modelAnswerInstances.map(answer => Object.assign({}, answer)),
   create: async () => {
     await testModelHelper.create()
     await db.testInstance.create(modelTestInstance)

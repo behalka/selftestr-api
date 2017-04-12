@@ -4,8 +4,6 @@ const schema = require('../validation/schema/index')
 const testService = require('../services/testInstance-service')
 const log = require('../common/logger')
 
-const data = require('../utils/data/testInstance')
-
 module.exports = {
   get: compose([
     async ctx => {
@@ -80,7 +78,7 @@ module.exports = {
   /*
    * updates/saves already created test instance
    */
-  save: compose([
+  saveResults: compose([
     middleware.validation.validateBody(schema.testInstances.saveResults),
     async ctx => {
       const user = ctx.request.user
@@ -92,10 +90,5 @@ module.exports = {
       ctx.status = 200
       ctx.body = result
     },
-  ]),
-  evaluate: compose([
-    /**
-     * get results for a test and send them back
-     */
   ]),
 }

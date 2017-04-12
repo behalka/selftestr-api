@@ -31,10 +31,11 @@ describe('PUT /tests/:test_instance_id - save testInstance result', () => {
     instance = await helpers.testInstance.create()
     token = await authHelper.generateToken()
   })
+  after(() => resetHelper.resetDb)  
   it('saves correctly testInstance results', async () => {
     const payload = generatePayload(instance)
     const res = await request(app)
-                .put(`/tests/${instance.id}`)
+                .put(`/tests/${instance.id}/result`)
                 .set('Authorization', token)
                 .send(payload)
                 .expect(200)
@@ -49,7 +50,7 @@ describe('PUT /tests/:test_instance_id - save testInstance result', () => {
     _.unset(payload, 'questionInstances[0].id')
 
     await request(app)
-    .put(`/tests/${instance.id}`)
+    .put(`/tests/${instance.id}/result`)
     .set('Authorization', token)
     .send(payload)
     .expect(400)
@@ -59,7 +60,7 @@ describe('PUT /tests/:test_instance_id - save testInstance result', () => {
     payload.foo = 'bar'
 
     await request(app)
-    .put(`/tests/${instance.id}`)
+    .put(`/tests/${instance.id}/result`)
     .set('Authorization', token)
     .send(payload)
     .expect(400)
@@ -69,7 +70,7 @@ describe('PUT /tests/:test_instance_id - save testInstance result', () => {
     _.unset(payload, 'questionInstances[0].answeredCorrectly')
 
     await request(app)
-    .put(`/tests/${instance.id}`)
+    .put(`/tests/${instance.id}/result`)
     .set('Authorization', token)
     .send(payload)
     .expect(400)
@@ -79,7 +80,7 @@ describe('PUT /tests/:test_instance_id - save testInstance result', () => {
     payload.questionInstances[0].answeredCorrectly = null
 
     await request(app)
-    .put(`/tests/${instance.id}`)
+    .put(`/tests/${instance.id}/result`)
     .set('Authorization', token)
     .send(payload)
     .expect(400)
@@ -90,7 +91,7 @@ describe('PUT /tests/:test_instance_id - save testInstance result', () => {
     _.unset(payload, 'questionInstances[0].answerInstances[1].isSelected')
 
     const res = await request(app)
-                .put(`/tests/${instance.id}`)
+                .put(`/tests/${instance.id}/result`)
                 .set('Authorization', token)
                 .send(payload)
                 .expect(200)
@@ -106,7 +107,7 @@ describe('PUT /tests/:test_instance_id - save testInstance result', () => {
     payload.questionInstances[0].answerInstances[1].userInput = null
 
     const res = await request(app)
-                .put(`/tests/${instance.id}`)
+                .put(`/tests/${instance.id}/result`)
                 .set('Authorization', token)
                 .send(payload)
                 .expect(200)

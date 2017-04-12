@@ -59,8 +59,8 @@ testInstances.get('/:test_instance_id/result',
 testInstances.post('/',
   middleware.auth.fetchUser(), controllers.testInstance.add)
 /* Ulozit vysledek testu */
-testInstances.put('/:test_instance_id',
-  middleware.auth.fetchUser(), controllers.testInstance.save)
+testInstances.put('/:test_instance_id/result',
+  middleware.auth.fetchUser(), controllers.testInstance.saveResults)
 router.use(testInstances.routes())
 
 const routes = router.routes()

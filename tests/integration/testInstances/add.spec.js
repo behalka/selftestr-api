@@ -28,7 +28,7 @@ function generate(model) {
   return test
 }
 
-describe.only('/POST tests/ - add test instance', () => {
+describe('/POST tests/ - add test instance', () => {
   let token
   let model
   beforeEach(async () => {
@@ -36,6 +36,7 @@ describe.only('/POST tests/ - add test instance', () => {
     token = await authHelper.generateToken()
     model = await helpers.testModel.create()
   })
+  after(() => resetHelper.resetDb)
   it('creates a test instance', async () => {
     const payload = generate(model)
     const res = await request(app)
