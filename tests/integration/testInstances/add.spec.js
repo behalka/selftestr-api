@@ -23,12 +23,13 @@ function generate(model) {
     delete answer.questionInstanceId
     return answer
   })
-  questions[0].answerInstances = answers
+  questions[0].answerInstances = answers.slice(0, 2)
+  questions[1].answerInstances = answers.slice(2)
   test.questionInstances = questions
   return test
 }
 
-describe('/POST tests/ - add test instance', () => {
+describe('POST tests/ - add test instance', () => {
   let token
   let model
   beforeEach(async () => {
@@ -47,10 +48,12 @@ describe('/POST tests/ - add test instance', () => {
     const test = res.body
     expect(test).to.contain.keys(['id', 'name', 'questionInstances'])
     expect(test.questionInstances).to.be.a('array')
-    expect(test.questionInstances.length).to.equal(1)
+    expect(test.questionInstances.length).to.equal(2)
     expect(test.questionInstances[0]).to.contain.keys(['answeredCorrectly', 'answerInstances', 'testInstanceId'])
     expect(test.questionInstances[0].answerInstances).to.be.a('array')
     expect(test.questionInstances[0].answerInstances.length).to.equal(2)
+    expect(test.questionInstances[1].answerInstances).to.be.a('array')
+    expect(test.questionInstances[1].answerInstances.length).to.equal(1)
   })
   it('returns 400 when testModelId is missing', async () => {
     const payload = generate(model)

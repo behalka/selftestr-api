@@ -24,7 +24,7 @@ describe('GET /tests/:test_instance_id - get test instance', () => {
       .keys(['id', 'name', 'testModelId', 'created_at', 'updated_at', 'userId', 'questionInstances'])
     const questions = instance.questionInstances
     expect(questions).to.be.instanceof(Array)
-    expect(questions.length).to.equal(1)
+    expect(questions.length).to.equal(2)
     expect(questions[0]).to.contain.all
       .keys(['id', 'text', 'explanation', 'testInstanceId', 'type', 'answerInstances', 'answeredCorrectly'])
     expect(_.omit(questions[0], 'answerInstances')).to.eql(helpers.testInstance.getQuestions()[0])
@@ -32,7 +32,7 @@ describe('GET /tests/:test_instance_id - get test instance', () => {
     expect(answers).to.be.instanceof(Array)
     expect(answers.length).to.equal(2)
     expect(answers[0]).to.contain.all.keys(['id', 'questionInstanceId', 'text', 'isSelected', 'isCorrect', 'userInput'])
-    expect(answers).to.eql(helpers.testInstance.getAnswers())
+    expect(answers).to.eql(helpers.testInstance.getAnswers().slice(0, 2))
   })
   it('returns 404 if we are trying to generate from unknown test model', async () => {
     const token = await authHelper.generateToken()
