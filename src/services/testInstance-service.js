@@ -2,6 +2,7 @@ const log = require('../common/logger')
 const errors = require('../common/errors')
 const db = require('../database')
 const testModelService = require('./test-service')
+const rand = require('../utils/randomIndices')
 
 async function getById(id) {
   const instance = await db.testInstance.findOne({
@@ -42,12 +43,22 @@ async function saveTestInstanceResults(testUpdates) {
   return result
 }
 
+function questionModelToInstance(question) {
+  const questionData = Object.assign({}, question)
+  delete questionData.id
+  questionData.answerInstances = questionData.answerModels.map(answer => {
+    const answerData = Object.assign({}, answer)
+    delete answerData.id
+    return answerData
+  })
+  delete questionData.answerModels
+  return questionData
+}
+
 module.exports = {
   get: getById,
   update: async updates => {
     const instance = await saveTestInstanceResults(updates)
-    // const instance = await getById(updates.id)
-    // log.info(instance.get({ plain: true }))
     return instance
   },
   add: async input => {
@@ -57,30 +68,36 @@ module.exports = {
     const completeInstance = await getById(instance.id)
     return completeInstance
   },
-  generate: async (testModelId, userId, questionsCount) => {
+  generate: async (testModelId, userId, inputQuestionsCnt) => {
     const testModel = await testModelService.get(testModelId)
-    /* todo -> questionsCount param will override default that is set in the testModel */
-    log.info(questionsCount, 'override this')
-    /* data neccessary for test instance entity */
-    const testInstance = Object.assign({}, testModel.get({ plain: true }))
-    testInstance.questionInstances = testInstance.questionModels.map(question => {
-      delete question.id
-      question.answerInstances = question.answerModels.map(answer => {
-        delete answer.id
-        return answer
+    let questionsCount
+    if (inputQuestionsCnt && testModel.questionModels.length >= inputQuestionsCnt) {
+      questionsCount = inputQuestionsCnt
+      log.warn('requested more questions than is stored')
+    } else if (testModel.questionsPerTestInstance <= testModel.questionModels.length) {
+      questionsCount = testModel.questionsPerTestInstance
+      log.warn('questionsPerInstance is bigger than actual count that is stored')
+    } else {
+      // fallback ke VSEM otazkam v testu
+      questionsCount = testModel.questionModels.length
+    }
+    const testInstanceData = Object.assign({},
+      testModel.get({ plain: true }),
+      {
+        userId,
+        testModelId,
       })
-      delete question.answerModels
-      return question
-    })
-    delete testInstance.questionModels
-    delete testInstance.id
-    const instance = await db.testInstance.create(Object.assign({}, testInstance, {
-      testModelId,
-      userId,
-    }), {
+    const questionIndices = rand.randomUniqueIndices(testInstanceData.questionModels.length, questionsCount)
+    testInstanceData.questionInstances = questionIndices
+      .map(index => questionModelToInstance(testInstanceData.questionModels[index]))
+    delete testInstanceData.id
+    delete testInstanceData.questionModels
+
+    const testInstance = await db.testInstance.create(testInstanceData, {
       include: [{ model: db.questionInstance, include: [db.answerInstance] }],
+      returning: true,
     })
-    const completeInstance = await getById(instance.id)
+    const completeInstance = await getById(testInstance.id)
     return completeInstance
   },
 }

@@ -8,12 +8,14 @@ module.exports = {
         id: uuidHelper.nextUuid('testModel'),
         name: 'test 1',
         description: 'lorem ipsum',
+        questions_per_test_instance: 2,
         user_id: uuidHelper.getUuid('user', 0),
       },
       {
         id: uuidHelper.nextUuid('testModel'),
         name: 'test 2',
         description: 'lorem ipsum dolor sit amet',
+        questions_per_test_instance: 3,
         user_id: uuidHelper.getUuid('user', 0),
       },
     ], {})
@@ -29,6 +31,13 @@ module.exports = {
         id: uuidHelper.nextUuid('questionModel'),
         test_model_id: uuidHelper.getUuid('testModel', 0),
         question_text: 'Kolik ma pes nohou?',
+        explanation: 'aletak',
+        question_type: 'singlechoice',
+      },
+      {
+        id: uuidHelper.nextUuid('questionModel'),
+        test_model_id: uuidHelper.getUuid('testModel', 0),
+        question_text: 'Kolik je 1+1?',
         explanation: 'aletak',
         question_type: 'singlechoice',
       },
@@ -52,6 +61,18 @@ module.exports = {
         question_model_id: uuidHelper.getUuid('questionModel', 1),
         answer_text: '1 nohu',
         is_correct: false,
+      },
+      {
+        id: uuidHelper.nextUuid('answerModel'),
+        question_model_id: uuidHelper.getUuid('questionModel', 2),
+        answer_text: '11',
+        is_correct: false,
+      },
+      {
+        id: uuidHelper.nextUuid('answerModel'),
+        question_model_id: uuidHelper.getUuid('questionModel', 2),
+        answer_text: '2',
+        is_correct: true,
       },
     ], {}))
   },
