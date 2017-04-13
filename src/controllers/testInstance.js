@@ -48,12 +48,13 @@ module.exports = {
   * from a testModel, store it and return it
   */
   generate: compose([
+    middleware.validation.validateQs(schema.testInstances.generateInstanceQs),
     async ctx => {
       const testModelId = ctx.params.test_model_id
-      // todo: query validation on this
-      const questionsCount = ctx.query.questions
+      const questionsCount = ctx.request.validatedQs.questions
       const user = ctx.request.user
-      const instance = await testService.generate(testModelId, user ? user.id : null, questionsCount)
+      const instance = await testService
+        .generate(testModelId, user ? user.id : null, questionsCount)
 
       ctx.status = 200
       ctx.body = instance

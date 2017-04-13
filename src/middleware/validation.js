@@ -29,4 +29,17 @@ module.exports = {
       await middleware()
     }
   },
+  validateQs: schema =>
+    async (ctx, middleware) => {
+      log.info({ qs: ctx.request.query }, 'Incoming query string')
+      try {
+        const result = await Promise.fromCallback(done =>
+        joi.validate(ctx.request.query, schema, done))
+        ctx.request.validatedQs = result
+      } catch (err) {
+        log.warn(err, 'Request validation error.')
+        throw new errors.ValidationError(err.message)
+      }
+      await middleware()
+    }
 }

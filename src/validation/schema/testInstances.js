@@ -24,6 +24,9 @@ module.exports = {
     name: joi.string().required(),
     questionInstances: joi.array().items(questionInstance),
   }),
+  generateInstanceQs: joi.object().keys({
+    questions: joi.number().integer().min(1),
+  }),
   saveResults: joi.object().keys({
     questionInstances: joi.array().items(joi.object().keys({
       id: joi.string().guid().required(),
