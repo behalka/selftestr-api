@@ -27,19 +27,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null,
       field: 'time_limit',
     },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: new Date(),
-      field: 'created_at',
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: new Date(),
-      field: 'updated_at',
-    },
   }, {
+    timestamps: true,
+    /* tyto fields musi mit underscored notaci aby fungoval autom. update updated_at flagu */
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
     tableName: 'test_model',
     classMethods: {
       associate: function(models) {
