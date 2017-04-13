@@ -91,4 +91,13 @@ module.exports = {
       ctx.body = result
     },
   ]),
+  testTimestamps: compose([
+    async ctx => {
+      // pri save() se updated prepise - MOZNA jsou nutne timestamps: true
+      const testInstance = await testService.get(ctx.params.test_instance_id)
+      testInstance.changed('updated_at', true)
+      await testInstance.save()
+      ctx.status = 200
+    },
+  ]),
 }

@@ -46,6 +46,7 @@ router.use(tests.routes())
 const testInstances = new Router({
   prefix: 'tests',
 })
+testInstances.get('/:test_instance_id/test', controllers.testInstance.testTimestamps)
 /* Vygenerovat novy test */
 testInstances.get('/models/:test_model_id',
   middleware.auth.fetchUser(), controllers.testInstance.generate)

@@ -18,7 +18,7 @@ describe('POST /tests/models/:test_model_id - generate test instance', () => {
     .expect(200)
 
     const instance = res.body
-    expect(instance).to.contain.all.keys(['id', 'name', 'testModelId', 'createdAt', 'updatedAt', 'userId'])
+    expect(instance).to.contain.all.keys(['id', 'name', 'testModelId', 'created_at', 'updated_at', 'userId'])
     expect(instance.name).to.equal(model.name)
     expect(instance.id).to.not.equal(model.id)
     expect(instance.testModelId).to.equal(model.id)

@@ -29,7 +29,7 @@
     "koa-static2": "^0.1.8",
     "lodash": "^4.17.2",
     "pg": "^6.1.0",
-    "sequelize": "^3.27.0",
+    "sequelize": "^4.0.0",
     "swagger-ui": "^2.2.8",
     "uuid": "^3.0.1",
     "uuid-v4": "^0.1.0"

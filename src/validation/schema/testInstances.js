@@ -32,7 +32,7 @@ module.exports = {
         id: joi.string().guid().required(),
         isSelected: joi.boolean().allow(null),
         userInput: joi.string().allow(null),
-      })),
-    })),
+      })).required(),
+    })).required(),
   }),
 }

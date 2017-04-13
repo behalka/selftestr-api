@@ -21,7 +21,7 @@ describe('GET /tests/:test_instance_id - get test instance', () => {
     const instance = res.body
 
     expect(instance).to.contain.all
-      .keys(['id', 'name', 'testModelId', 'createdAt', 'updatedAt', 'userId', 'questionInstances'])
+      .keys(['id', 'name', 'testModelId', 'created_at', 'updated_at', 'userId', 'questionInstances'])
     const questions = instance.questionInstances
     expect(questions).to.be.instanceof(Array)
     expect(questions.length).to.equal(1)

@@ -11,33 +11,43 @@ async function getById(id) {
   return instance
 }
 
-function saveTestInstanceResults(testUpdates) {
-  return db.sequelize.transaction(async trans => {
+async function saveTestInstanceResults(testUpdates) {
+  const result = await db.sequelize.transaction(async trans => {
     /* update all questions */
     for (const question of testUpdates.questionInstances) {
       /* update all answers */
       for (const answer of question.answerInstances) {
-        log.info(answer)
         await db.answerInstance.update(answer, {
           where: { id: answer.id },
           transaction: trans,
         })
       }
-      log.info(question)
       await db.questionInstance.update(question, {
         where: { id: question.id },
         transaction: trans,
       })
     }
     /* update the test itself if needed */
+    const testInstance = await db.testInstance.findOne({
+      where: { id: testUpdates.id },
+      include: [{ model: db.questionInstance, include: [db.answerInstance] }],
+      transaction: trans,
+    })
+    testInstance.changed('updated_at', true)
+    await testInstance.save({
+      transaction: trans,
+    })
+    return testInstance
   })
+  return result
 }
 
 module.exports = {
   get: getById,
   update: async updates => {
-    await saveTestInstanceResults(updates)
-    const instance = await getById(updates.id)
+    const instance = await saveTestInstanceResults(updates)
+    // const instance = await getById(updates.id)
+    // log.info(instance.get({ plain: true }))
     return instance
   },
   add: async input => {
