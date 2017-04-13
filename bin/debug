@@ -1,4 +1,0 @@
-#!/bin/sh
-
-node_modules/.bin/gulp compile \
-  && node "$@" --inspect dist/src/server | node_modules/.bin/bunyan

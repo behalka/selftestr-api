@@ -1,6 +1,0 @@
-#!/bin/sh
-
-node_modules/.bin/nodemon \
-  --watch ./src \
-  --exec "node src/server | node_modules/.bin/bunyan"
-  

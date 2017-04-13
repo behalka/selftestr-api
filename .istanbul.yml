@@ -1,0 +1,19 @@
+instrumentation:
+  # Include all source files so we know which files are not tested at all
+  include-all-sources: true
+  # These files are either 3rd party or they make little sense to be included in coverage reports
+  excludes:
+    - 'src/config/env/**'
+    - 'dist/**'
+    - 'gulpfile.js'
+    - 'src/utils/data/*'
+    - 'src/seeders/*'
+    - 'src/database/migrations/*'
+    - 'src/server.js'
+
+reporting:
+  print: summary
+  reports:
+    - json
+    - lcov
+  dir: ./coverage
