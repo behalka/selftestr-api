@@ -18,18 +18,18 @@ function getTestRanking(testModelId) {
 
 module.exports = {
   getTestRanking,
-  getAll: () => {
-    return db.testModel.findAll({
+  getAll: () =>
+    db.testModel.findAll({
       include: [{ model: db.questionModel, attributes: [] }],
-      group: ['testModel.id'],
-      attributes: {
-        include: [[db.sequelize.fn('COUNT',
-          db.sequelize.col('questionModels.id')),
-          'questionsCount',
-        ]],
-      },
-    })
-  },
+      // tohle je sequelize agregovany dotaz - priklad!
+      // group: ['testModel.id'],
+      // attributes: {
+      //   include: [[db.sequelize.fn('COUNT',
+      //     db.sequelize.col('questionModels.id')),
+      //     'questionsCount',
+      //   ]],
+      // },
+    }),
   addRating: async (id, user, ratingValue) => {
     const test = await db.testModel.findOne({
       where: { id },
