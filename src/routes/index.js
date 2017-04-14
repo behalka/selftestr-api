@@ -36,11 +36,19 @@ router.use('/editor', middleware.auth.isLogged(), testModels.routes())
 const tests = new Router()
 tests.get('/testModels', controllers.testModel.list)
 tests.get('/testModels/:test_id', controllers.testModel.getDetails)
-tests.post('/testModels/:test_id/rating',
+tests.post('/testModels/:test_id/ratings',
   middleware.auth.fetchUser(), controllers.testModel.addRating)
-tests.post('/testModels/:test_id/comment',
+tests.post('/testModels/:test_id/comments',
   middleware.auth.isLogged(), controllers.testModel.addComment)
+// tests.delete('/testModels/:test_id/comment/:comment_id',
+//   middleware.auth.isLogged(), controllers.testModel.deleteComment)
 router.use(tests.routes())
+
+/* Comments */
+const comments = new Router()
+comments.delete('/comments/:comment_id',
+  middleware.auth.isLogged(), controllers.testModel.deleteComment)
+router.use(comments.routes())
 
 /* Test instances */
 const testInstances = new Router({

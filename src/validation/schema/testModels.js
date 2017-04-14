@@ -8,4 +8,7 @@ module.exports = {
   addRating: joi.object().keys({
     rating: joi.number().integer().min(0).max(5).required(),
   }),
+  addComment: joi.object().keys({
+    text: joi.string().max(255).required(),
+  }),
 }

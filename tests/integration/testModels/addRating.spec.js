@@ -7,7 +7,7 @@ const authHelper = require('../../data/auth')
 const helpers = require('../../data/entities/index')
 const app = require('../../../src/app')
 
-describe('POST testModels/:id/rating - add testModel rating', () => {
+describe('POST testModels/:id/ratings - add testModel rating', () => {
   let token
   let model
   beforeEach(async () => {
@@ -22,7 +22,7 @@ describe('POST testModels/:id/rating - add testModel rating', () => {
       rating: 3,
     }
     const res = await request(app)
-    .post(`/testModels/${testModelId}/rating`)
+    .post(`/testModels/${testModelId}/ratings`)
     .send(payload)
     .expect(201)
 
@@ -39,7 +39,7 @@ describe('POST testModels/:id/rating - add testModel rating', () => {
       rating: 3,
     }
     const res = await request(app)
-    .post(`/testModels/${testModelId}/rating`)
+    .post(`/testModels/${testModelId}/ratings`)
     .set({ Authorization: token })
     .send(payload)
     .expect(201)
@@ -53,7 +53,7 @@ describe('POST testModels/:id/rating - add testModel rating', () => {
       rating: 3,
     }
     const res = await request(app)
-    .post(`/testModels/${userId}/rating`)
+    .post(`/testModels/${userId}/ratings`)
     .set({ Authorization: token })
     .send(payload)
     .expect(404)
@@ -67,7 +67,7 @@ describe('POST testModels/:id/rating - add testModel rating', () => {
       rating: 'abc',
     }
     await request(app)
-    .post(`/testModels/${testModelId}/rating`)
+    .post(`/testModels/${testModelId}/ratings`)
     .send(payload)
     .expect(400)
   })
@@ -77,7 +77,7 @@ describe('POST testModels/:id/rating - add testModel rating', () => {
       rating: 6,
     }
     await request(app)
-    .post(`/testModels/${testModelId}/rating`)
+    .post(`/testModels/${testModelId}/ratings`)
     .send(payload)
     .expect(400)
   })
@@ -87,7 +87,7 @@ describe('POST testModels/:id/rating - add testModel rating', () => {
       rating: -1,
     }
     await request(app)
-    .post(`/testModels/${testModelId}/rating`)
+    .post(`/testModels/${testModelId}/ratings`)
     .send(payload)
     .expect(400)
   })

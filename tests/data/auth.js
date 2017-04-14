@@ -18,7 +18,11 @@ async function generateToken() {
   const token = await crypto.generateAccessToken(user.id, user.username)
   return token
 }
+function generateTokenFrom(user) {
+  return crypto.generateAccessToken(user.id, user.username)
+}
 
 module.exports = {
   generateToken,
+  generateTokenFrom,
 }

@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken')
 const config = require('../config')
 const errors = require('../common/errors')
 const db = require('../database')
+const log = require('../common/logger')
 
 function parseToken(ctx, authorization) {
   // Pokud tam hlavicka je, tak musi byt validni
@@ -25,6 +26,44 @@ async function setUser(payload) {
 }
 
 module.exports = {
+  /**
+   * @param {string} entityModel name of db model we want to check
+   * @param {strin} paramsField - UUID of the entity we want to check.
+   *  It is ALWAYS retrieved from ctx.params
+   * @returns {Promise} middleware
+   */
+  userIsOwner: (entityModel, paramsField) =>
+    async (ctx, middleware) => {
+      const entityId = ctx.params[paramsField]
+      const user = ctx.request.user
+      if (!user) {
+        throw new errors.UnauthorizedError('Cannot proceed middleware - user is not set.')
+      }
+      /* istanbul ignore if */
+      if (!entityId) {
+        throw new errors.ApiError('Entity id is not provided.')
+      }
+      /* istanbul ignore if */
+      if (!db[entityModel]) {
+        throw new errors.NotFoundError('E_ENTITY_NOTFOUND', `Db model ${entityModel} not found.`)
+      }
+      /* istanbul ignore if */
+      if (!db[entityModel].attributes.userId) {
+        throw new errors.ApiError('Entity does not include userId field.')
+      }
+      const result = await db[entityModel].findOne({
+        where: {
+          id: entityId,
+          userId: user.id,
+        },
+      })
+      if (!result) {
+        throw new errors.ForbiddenError(`User ${user.id} cannot access this resource.`)
+      } else {
+        ctx.request.entity = result
+      }
+      await middleware()
+    },
   /*
    * Populates ctx.request.user field
    */

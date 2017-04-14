@@ -2,6 +2,7 @@ const compose = require('koa-compose')
 const middleware = require('../middleware/index')
 const schema = require('../validation/schema/index')
 const testService = require('../services/test-service')
+const service = require('../services/comment-service')
 
 /**
  * todo:
@@ -91,14 +92,31 @@ module.exports = {
       ctx.body = result
     },
   ]),
+  /*
+   * Potrebuje params: test_model_id a uzivatele (token) 
+   */
   addComment: compose([
+    middleware.validation.validateBody(schema.testModels.addComment),
     async ctx => {
       const testId = ctx.params.test_id
+      const user = ctx.request.user
+      const payload = ctx.request.validatedBody
+      const comment = await service.add(payload, user, testId)
+
+      ctx.status = 201
+      ctx.body = comment
+    },
+  ]),
+  /*
+   * Potrebuje params: comment_id a uzivatele
+   * Uzivatel musi byt autor komentare
+   */
+  deleteComment: compose([
+    middleware.auth.userIsOwner('comment', 'comment_id'),
+    async ctx => {
+      const comment = ctx.request.entity
+      await comment.destroy()
       ctx.status = 200
-      // fixme: return comment
-      ctx.body = {
-        testId,
-      }
     },
   ]),
 }
