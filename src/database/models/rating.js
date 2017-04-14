@@ -1,48 +1,35 @@
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define('testModel', {
+  return sequelize.define('rating', {
     id: {
       primaryKey: true,
       allowNull: false,
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
-    },    
-    name: {
-      type: DataTypes.STRING,
+    },
+    rating: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     userId: {
       type: DataTypes.UUID,
-      allowNull: false,
+      allowNull: true,
       field: 'user_id',
     },
-    questionsPerTestInstance: {
-      type: DataTypes.INTEGER,
+    testModelId: {
+      type: DataTypes.UUID,
       allowNull: false,
-      defaultValue: 10,
-      field: 'questions_per_test_instance',
-    },
-    timeLimit: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      defaultValue: null,
-      field: 'time_limit',
-    },
-    ratingValue: {
-      type: DataTypes.VIRTUAL,
-    },
-    ratingCount: {
-      type: DataTypes.VIRTUAL,
+      field: 'test_model_id',
     },
   }, {
     timestamps: true,
     /* tyto fields musi mit underscored notaci aby fungoval autom. update updated_at flagu */
     createdAt: 'created_at',
     updatedAt: 'updated_at',
-    tableName: 'test_model',
+    tableName: 'test_model_rating',
     classMethods: {
       associate: function(models) {
-        this.hasMany(models.questionModel, { foreignKey: 'testModelId' })
         this.belongsTo(models.user)
+        this.belongsTo(models.testModel)
       },
     },
   })

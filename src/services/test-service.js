@@ -2,7 +2,22 @@ const log = require('../common/logger')
 const errors = require('../common/errors')
 const db = require('../database')
 
+function getTestRanking(testModelId) {
+  const query = `
+    SELECT SUM(rating) as sum, COUNT(rating) as count
+    FROM test_model_rating
+    WHERE test_model_id=:id
+  `
+  return db.sequelize.query(query, {
+    replacements: {
+      id: testModelId,
+    },
+    type: db.sequelize.QueryTypes.SELECT,
+  })
+}
+
 module.exports = {
+  getTestRanking,
   getAll: () => {
     return db.testModel.findAll({
       include: [{ model: db.questionModel, attributes: [] }],
@@ -14,6 +29,30 @@ module.exports = {
         ]],
       },
     })
+  },
+  addRating: async (id, user, ratingValue) => {
+    const test = await db.testModel.findOne({
+      where: { id },
+    })
+    if (!test) {
+      throw new errors.NotFoundError('E_NOTFOUND_TEST', `Test with id ${id} does not exist.`)
+    }
+    if (user) {
+      const userModel = await db.user.findOne({
+        where: { id: user.id },
+      })
+      if (!userModel) {
+        throw new errors.NotFoundError('E_NOTFOUNT_USER', `User with id ${user.id} does not exist.`)
+      }
+    }
+    const rating = await db.rating.create({
+      testModelId: id,
+      userId: user ? user.id : null,
+      rating: ratingValue,
+    }, {
+      returning: true,
+    })
+    return rating
   },
   get: async id => {
     const test = await db.testModel.findOne({

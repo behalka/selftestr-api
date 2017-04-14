@@ -18,15 +18,17 @@ module.exports = {
       ctx.body = { test }
     },
   ]),
+  /*
+   * Tohle je kompletni detail testModelu se vsim vsudy
+   */
   getDetails: compose([
     async ctx => {
       let test = await testService.get(ctx.params.test_id)
-      // todo: remove this
+      // we expect only one result due to the query content
+      const { sum, count } = (await testService.getTestRanking(test.id))[0]
+      test.ratingValue = sum / count
+      test.ratingCount = count
       test = test.get({ plain: true })
-      test.review = {
-        stars: 4.2,
-        count: 123,
-      }
       test.comments = [
         {
           text: 'this is a comment',
@@ -46,8 +48,8 @@ module.exports = {
         }
       ]
       ctx.status = 200
-      ctx.body = { test }
-    }
+      ctx.body = test
+    },
   ]),
   list: compose([
     async ctx => {
@@ -80,11 +82,16 @@ module.exports = {
     },
   ]),
   update: compose([]),
-  // fixme: !
   addRating: compose([
+    middleware.validation.validateBody(schema.testModels.addRating),
     async ctx => {
       const testId = ctx.params.test_id
+      const user = ctx.request.user || null
+      const payload = ctx.request.validatedBody
+      const result = await testService.addRating(testId, user, payload.rating)
+
       ctx.status = 201
+      ctx.body = result
     },
   ]),
   addComment: compose([

@@ -8,10 +8,11 @@ describe('auth middleware - editor/:test_model_id endpoint', () => {
   let test
   let accessToken
   beforeEach(async () => {
+    await resetHelper.resetDb()
     test = await helpers.testModel.create()
     accessToken = crypto.generateAccessToken(test.userId, 'behalkar')
   })
-  afterEach(() => resetHelper.resetDb())
+  // afterEach(() => resetHelper.resetDb())
   it('returns 401 on missing authorization header', () =>
     request(app)
     .get(`/tests/${test.id}`)
