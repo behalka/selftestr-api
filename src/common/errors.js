@@ -33,8 +33,8 @@ class ForbiddenError extends ApiError {
 }
 
 class NotFoundError extends ApiError {
-  constructor(message = 'Target resource was not found.') {
-    super('E_NOT_FOUND', message, 404)
+  constructor(type = 'E_NOT_FOUND', message = 'Target resource was not found.') {
+    super(type, message, 404)
   }
 }
 
