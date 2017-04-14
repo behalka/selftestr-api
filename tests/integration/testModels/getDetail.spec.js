@@ -22,7 +22,7 @@ describe('GET testModels/:id - get testModel', () => {
     expect(test).to.contain.all.keys(
       ['id', 'questionModels', 'comments', 'name', 'userId',
         'questionsPerTestInstance', 'timeLimit', 'updated_at', 'created_at',
-        'ratingValue', 'ratingCount'])
+        'ratingValue', 'ratingCount', 'description'])
     expect(test.name).to.equal(model.name)
     expect(test.timeLimit).to.equal(model.timeLimit)
     expect(test.questionsPerTestInstance).to.equal(model.questionsPerTestInstance)

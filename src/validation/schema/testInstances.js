@@ -22,6 +22,7 @@ module.exports = {
     userId: joi.string().guid().allow(null),
     testModelId: joi.string().guid().required(),
     name: joi.string().required(),
+    description: joi.string().allow(null),
     questionInstances: joi.array().items(questionInstance),
   }),
   generateInstanceQs: joi.object().keys({

@@ -15,7 +15,6 @@ describe('POST testModels/:id/ratings - add testModel rating', () => {
     token = await authHelper.generateToken()
     model = await helpers.testModel.create()
   })
-  after(() => resetHelper.resetDb)
   it('adds a rating to a testModel with anonymous user', async () => {
     const testModelId = model.id
     const payload = {

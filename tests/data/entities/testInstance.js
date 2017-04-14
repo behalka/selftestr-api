@@ -8,6 +8,7 @@ const modelTestInstance = {
   id: 'e7507e80-cb96-4db4-b1a3-0260560a1d6a',
   testModelId: testModel.id,
   name: 'Vygenerovany test 1',
+  description: 'vysvetleni',
 }
 const modelQuestionInstance = {
   id: 'd27cab3e-f9de-43e7-ac12-1ab61a440548',

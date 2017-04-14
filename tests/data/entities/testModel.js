@@ -7,6 +7,7 @@ const user = userHelper.getModelUser()
 const modelTest = {
   id: 'e646295e-a5f4-41c4-89ad-6258de0df130',
   name: 'Modelovy test',
+  description: 'vysvetleni',
   timeLimit: 5000,
   userId: user.id,
   questionsPerTestInstance: 2,
