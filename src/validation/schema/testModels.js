@@ -1,4 +1,5 @@
 const joi = require('joi')
+const sortTypes = require('../../database/enums/sortTypes')
 
 module.exports = {
   create: joi.object().keys({
@@ -10,5 +11,9 @@ module.exports = {
   }),
   addComment: joi.object().keys({
     text: joi.string().max(255).required(),
+  }),
+  findSortQuery: joi.object().keys({
+    find: joi.string().max(20),
+    sort: joi.string().allow(...Object.keys(sortTypes)),
   }),
 }

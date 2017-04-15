@@ -37,6 +37,7 @@ module.exports = (sequelize, DataTypes) =>
     classMethods: {
       associate: function(models) {
         this.hasMany(models.testModel)
+        this.hasMany(models.comment)
       },
     },
     hooks: {

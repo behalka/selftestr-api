@@ -1,6 +1,7 @@
 const log = require('../common/logger')
 const errors = require('../common/errors')
 const db = require('../database')
+const sortEnum = require('../database/enums/sortTypes')
 
 function getTestRanking(testModelId) {
   const query = `
@@ -16,11 +17,67 @@ function getTestRanking(testModelId) {
   })
 }
 
+async function setRatings(testModels = []) {
+  for (const test of testModels) {
+    const { sum, count } = (await getTestRanking(test.id))[0]
+    test.ratingValue = sum / count
+    test.ratingCount = count
+  }
+  return testModels
+}
+
+function buildSortQuery(sortQuery) {
+  switch (sortQuery) {
+    case sortEnum.rating:
+      throw new errors.ApiError('API_ERROR', 'not supported yet :(')
+    case sortEnum.latest:
+      return [
+        ['created_at', 'DESC'],
+      ]
+    case sortEnum.alphabet:
+      return [
+        [db.sequelize.fn('lower', db.sequelize.col('name')), 'ASC'],
+      ]
+    default:
+      throw new errors.ValidationError(`Invalid sort option ${sortQuery}.`)
+  }
+}
+
+function buildFindQuery(findQuery, sortQuery) {
+  const find = findQuery ? {
+    $or: [
+      // name - case insensitive
+      db.sequelize.where(
+        db.sequelize.fn('lower', db.sequelize.col('name')),
+        { $like: db.sequelize.fn('lower', `%${findQuery}%`) }
+      ),
+      // desc
+      {
+        description: {
+          $like: `%${findQuery}%`,
+        },
+      },
+    ],
+  } : {}
+  const sort = sortQuery
+  ? buildSortQuery(sortQuery)
+  : []
+  return {
+    where: find,
+    order: sort,
+  }
+}
+
 module.exports = {
+  setRatings,
   getTestRanking,
-  getAll: () =>
-    db.testModel.findAll({
-      include: [{ model: db.questionModel, attributes: [] }],
+  getAll: (findQuery, sortQuery) => {
+    const options = buildFindQuery(findQuery, sortQuery)
+    return db.testModel.findAll(Object.assign({}, options, {
+      include: [{ model: db.comment }],
+    }))
+  },
+      // include: [{ model: db.questionModel, attributes: [] }],
       // tohle je sequelize agregovany dotaz - priklad!
       // group: ['testModel.id'],
       // attributes: {
@@ -29,7 +86,6 @@ module.exports = {
       //     'questionsCount',
       //   ]],
       // },
-    }),
   addRating: async (id, user, ratingValue) => {
     const test = await db.testModel.findOne({
       where: { id },
@@ -57,7 +113,10 @@ module.exports = {
   get: async id => {
     const test = await db.testModel.findOne({
       where: { id },
-      include: [{ model: db.questionModel, include: [db.answerModel] }],
+      include: [
+        { model: db.questionModel, include: [db.answerModel] },
+        { model: db.comment },
+      ],
     })
     if (!test) {
       throw new errors.NotFoundError('E_NOTFOUND_TEST', `Test with id ${id} does not exist.`)

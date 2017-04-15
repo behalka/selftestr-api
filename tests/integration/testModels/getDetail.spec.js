@@ -22,10 +22,11 @@ describe('GET testModels/:id - get testModel', () => {
     expect(test).to.contain.all.keys(
       ['id', 'questionModels', 'comments', 'name', 'userId',
         'questionsPerTestInstance', 'timeLimit', 'updated_at', 'created_at',
-        'ratingValue', 'ratingCount', 'description'])
+        'ratingValue', 'ratingCount', 'description', 'comments'])
     expect(test.name).to.equal(model.name)
     expect(test.timeLimit).to.equal(model.timeLimit)
     expect(test.questionsPerTestInstance).to.equal(model.questionsPerTestInstance)
+    expect(test.comments).to.be.a('array')
     expect(test.questionModels).to.be.a('array')
     expect(test.questionModels.length).to.equal(2)
   })
@@ -42,5 +43,4 @@ describe('GET testModels/:id - get testModel', () => {
     expect(test.ratingCount).to.equal(2)
     expect(test.ratingValue).to.equal((5 + 1) / 2)
   })
-  // todo: comment tests
 })

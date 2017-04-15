@@ -25,44 +25,18 @@ module.exports = {
   getDetails: compose([
     async ctx => {
       let test = await testService.get(ctx.params.test_id)
-      // we expect only one result due to the query content
-      const { sum, count } = (await testService.getTestRanking(test.id))[0]
-      test.ratingValue = sum / count
-      test.ratingCount = count
-      test = test.get({ plain: true })
-      test.comments = [
-        {
-          text: 'this is a comment',
-          author: {
-            id: '3e8c384f-2c19-4ea2-bc0b-02f0fe784ba2',
-            username: 'behalkar',
-            createdAt: new Date(),
-          }
-        },
-        {
-          text: 'this is another comment',
-          author: {
-            id: '3e8c384f-2c19-4ea2-bc0b-02f0fe784ba3',
-            username: 'kalinja',
-            createdAt: new Date(),
-          }
-        }
-      ]
+      test = (await testService.setRatings([test]))[0]
+
       ctx.status = 200
       ctx.body = test
     },
   ]),
   list: compose([
+    middleware.validation.validateQs(schema.testModels.findSortQuery),
     async ctx => {
-      // todo: query validation - custom middleware
       const { find, sort } = ctx.query
-      console.log(find, sort) // query params to perform the search
-      const tests = await testService.getAll()
-      for (const test of tests) {
-        const { sum, count } = (await testService.getTestRanking(test.id))[0]
-        test.ratingValue = sum / count
-        test.ratingCount = count
-      }
+      let tests = await testService.getAll(find, sort)
+      tests = await testService.setRatings(tests)
       ctx.status = 200
       ctx.body = tests
     },

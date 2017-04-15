@@ -22,8 +22,17 @@ describe('GET testModels/ - list testModel', () => {
     const test = tests[0]
     expect(test).to.contain.all.keys(['id', 'name', 'created_at', 'updated_at',
       'questionsPerTestInstance', 'timeLimit', 'userId',
-      'ratingCount', 'ratingValue'])
+      'ratingCount', 'ratingValue', 'comments'])
     expect(test.name).to.equal(model.name)
   })
-  // todo: comments, query params
+  // todo: sorts
+  it('returns testModels that contain provided query in name', async () => {
+    const res = await request(app)
+    .get('/testModels')
+    .query({ find: 'model' })
+    .expect(200)
+    const tests = res.body
+    expect(tests).to.be.a('array')
+    expect(tests.length).to.equal(1)
+  })
 })
