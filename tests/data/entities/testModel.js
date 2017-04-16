@@ -29,6 +29,19 @@ const modelQuestionModels = [
     type: 'singlechoice',
   },
 ]
+const anotherQuestion = {
+  id: 'd27cab3e-f9de-43e7-ac12-1ab61a440550',
+  testModelId: modelTest.id,
+  text: 'Jina otazka',
+  type: 'text_input',
+}
+const anotherAnswer = {
+  id: 'd27cab3e-f9de-43e7-ac12-1ab61a440551',
+  questionModelId: anotherQuestion.id,
+  text: 'Jina otazka',
+  isCorrect: true,
+  correctSolution: 'foo',
+}
 const modelAnswerModels = [
   {
     id: '8e5e27e6-14fc-477c-891f-ca178c990f46',
@@ -67,6 +80,19 @@ module.exports = {
       })
     question.answerModels = answers
     return question
+  },
+  getAnotherQuestion: () => {
+    const question = Object.assign({}, anotherQuestion)
+    delete question.testModelId
+    const answer = Object.assign({}, anotherAnswer)
+    delete answer.questionModelId
+    question.answerModels = [answer]
+    return question
+  },
+  getAnotherAnswer: () => {
+    const answer = Object.assign({}, anotherAnswer)
+    delete answer.questionModelId
+    return answer
   },
   create: async () => {
     try {

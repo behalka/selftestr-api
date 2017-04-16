@@ -44,6 +44,10 @@ module.exports = {
       ctx.body = test
     },
   ]),
+  /*
+   * Update je jen pro udaje ohledne testu obecne
+   * Pro update nejake z otazek je nutne vyuzit zvlastni endpoint
+   */
   update: compose([
     middleware.validation.validateBody(schema.testModels.update),
     middleware.auth.userIsOwner('testModel', 'test_model_id'),

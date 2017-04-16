@@ -25,14 +25,12 @@ testModels.delete('/:test_model_id', controllers.testModel.delete)
 /* Question models */
 const questionModels = new Router()
 questionModels.get('/', controllers.questionModel.list)
+questionModels.get('/:question_model_id', controllers.questionModel.get)
 questionModels.post('/', controllers.questionModel.add)
-questionModels.put('/:question_id/answers', controllers.questionModel.setAnswers)
-questionModels.get('/:question_id', controllers.questionModel.get)
-questionModels.delete('/:question_id', controllers.questionModel.delete)
-// todo: missing controller func
-questionModels.patch('/:question_id', controllers.questionModel.get)
+questionModels.patch('/:question_model_id', controllers.questionModel.update)
+questionModels.delete('/:question_model_id', controllers.questionModel.delete)
 
-testModels.use('/:test_id/questions', questionModels.routes())
+testModels.use('/:test_model_id/questions', questionModels.routes())
 router.use('/editor', middleware.auth.isLogged(), testModels.routes())
 /* EDITOR END */
 
