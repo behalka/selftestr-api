@@ -12,14 +12,6 @@ const log = require('../common/logger')
  * pagination
  */
 module.exports = {
-  get: compose([
-    async ctx => {
-      const test = await testService.get(ctx.params.test_id)
-
-      ctx.status = 200
-      ctx.body = { test }
-    },
-  ]),
   /*
    * Tohle je kompletni detail testModelu se vsim vsudy
    */
