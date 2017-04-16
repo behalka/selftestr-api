@@ -35,8 +35,12 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: 'updated_at',
     classMethods: {
       associate: function(models) {
-        this.hasMany(models.answerModel, { foreignKey: 'questionModelId' })
-        this.belongsTo(models.testModel)
+        this.hasMany(models.answerModel, {
+          foreignKey: 'questionModelId',
+        })
+        this.belongsTo(models.testModel, {
+          onDelete: 'CASCADE',
+        })
       },
     },
   })

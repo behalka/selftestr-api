@@ -31,7 +31,9 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'answer_model',
     classMethods: {
       associate: function(models) {
-        this.belongsTo(models.questionModel)
+        this.belongsTo(models.questionModel, {
+          onDelete: 'CASCADE',
+        })
       },
     },
   })
