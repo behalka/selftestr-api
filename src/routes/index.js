@@ -39,7 +39,7 @@ const tests = new Router()
 tests.get('/testModels', controllers.testModel.list)
 tests.get('/testModels/:test_id', controllers.testModel.getDetails)
 tests.post('/testModels/:test_id/ratings',
-  middleware.auth.fetchUser(), controllers.testModel.addRating)
+  middleware.auth.isLogged(), controllers.testModel.addRating)
 tests.post('/testModels/:test_id/comments',
   middleware.auth.isLogged(), controllers.testModel.addComment)
 // tests.delete('/testModels/:test_id/comment/:comment_id',

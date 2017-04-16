@@ -6,6 +6,7 @@ const resetHelper = require('../../data/cleaner')
 const authHelper = require('../../data/auth')
 const helpers = require('../../data/entities/index')
 const app = require('../../../src/app')
+const db = require('../../../src/database/index')
 
 describe('POST testModels/:id/ratings - add testModel rating', () => {
   let token
@@ -15,7 +16,7 @@ describe('POST testModels/:id/ratings - add testModel rating', () => {
     token = await authHelper.generateToken()
     model = await helpers.testModel.create()
   })
-  it('adds a rating to a testModel with anonymous user', async () => {
+  it.skip('adds a rating to a testModel with anonymous user', async () => {
     const testModelId = model.id
     const payload = {
       rating: 3,
@@ -67,8 +68,26 @@ describe('POST testModels/:id/ratings - add testModel rating', () => {
     }
     await request(app)
     .post(`/testModels/${testModelId}/ratings`)
+    .set({ Authorization: token })
     .send(payload)
     .expect(400)
+  })
+  it('returns 409 when rating is already created', async () => {
+    const testModelId = model.id
+    const payload = {
+      rating: 4,
+    }
+    const userId = helpers.user.getModelUser().id
+    await db.rating.create({
+      rating: 3,
+      userId,
+      testModelId,
+    })
+    await request(app)
+    .post(`/testModels/${testModelId}/ratings`)
+    .set({ Authorization: token })
+    .send(payload)
+    .expect(409)
   })
   it('returns 400 when rating is bigger than 5', async () => {
     const testModelId = model.id
@@ -77,6 +96,7 @@ describe('POST testModels/:id/ratings - add testModel rating', () => {
     }
     await request(app)
     .post(`/testModels/${testModelId}/ratings`)
+    .set({ Authorization: token })
     .send(payload)
     .expect(400)
   })
@@ -87,6 +107,7 @@ describe('POST testModels/:id/ratings - add testModel rating', () => {
     }
     await request(app)
     .post(`/testModels/${testModelId}/ratings`)
+    .set({ Authorization: token })
     .send(payload)
     .expect(400)
   })

@@ -93,22 +93,21 @@ module.exports = {
     if (!test) {
       throw new errors.NotFoundError('E_NOTFOUND_TEST', `Test with id ${id} does not exist.`)
     }
-    if (user) {
-      const userModel = await db.user.findOne({
-        where: { id: user.id },
-      })
-      if (!userModel) {
-        throw new errors.NotFoundError('E_NOTFOUNT_USER', `User with id ${user.id} does not exist.`)
-      }
+    const rating = await db.rating.findOne({
+      testModelId: id,
+      userId: user.id,
+    })
+    if (rating) {
+      throw new errors.ConflictError(`User ${user.id} already rated test ${id}.`)
     }
-    const rating = await db.rating.create({
+    const result = await db.rating.create({
       testModelId: id,
       userId: user ? user.id : null,
       rating: ratingValue,
     }, {
       returning: true,
     })
-    return rating
+    return result
   },
   get: async id => {
     const test = await db.testModel.findOne({
