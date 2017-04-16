@@ -3,6 +3,7 @@ const middleware = require('../middleware/index')
 const schema = require('../validation/schema/index')
 const testService = require('../services/test-service')
 const service = require('../services/comment-service')
+const log = require('../common/logger')
 
 /**
  * todo:
@@ -44,16 +45,33 @@ module.exports = {
   create: compose([
     middleware.validation.validateBody(schema.testModels.create),
     async ctx => {
-      const body = ctx.request.body
-      const test = await testService.createTest(body)
+      const body = ctx.request.validatedBody
+      const test = await testService.createTest(body, ctx.request.user)
 
       ctx.status = 201
-      ctx.body = {
-        test,
-      }
+      ctx.body = test
     },
   ]),
-  update: compose([]),
+  update: compose([
+    middleware.validation.validateBody(schema.testModels.update),
+    middleware.auth.userIsOwner('testModel', 'test_model_id'),
+    async ctx => {
+      const payload = ctx.request.validatedBody
+      const testModel = ctx.request.entity
+
+      const result = await testService.update(testModel, payload)
+      ctx.status = 200
+      ctx.body = result
+    },
+  ]),
+  delete: compose([
+    middleware.auth.userIsOwner('testModel', 'test_model_id'),
+    async ctx => {
+      const testModel = ctx.request.entity
+      await testModel.destroy()
+      ctx.status = 200
+    },
+  ]),
   addRating: compose([
     middleware.validation.validateBody(schema.testModels.addRating),
     async ctx => {

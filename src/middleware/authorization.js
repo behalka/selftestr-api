@@ -37,7 +37,7 @@ module.exports = {
       const entityId = ctx.params[paramsField]
       const user = ctx.request.user
       if (!user) {
-        throw new errors.UnauthorizedError('Cannot proceed middleware - user is not set.')
+        throw new errors.UnauthorizedError('Cannot process middleware - user is not set.')
       }
       /* istanbul ignore if */
       if (!entityId) {
@@ -51,13 +51,15 @@ module.exports = {
       if (!db[entityModel].attributes.userId) {
         throw new errors.ApiError('Entity does not include userId field.')
       }
+      log.debug({ user, entityId, entityModel }, 'owner payload')
       const result = await db[entityModel].findOne({
         where: {
           id: entityId,
-          userId: user.id,
         },
       })
       if (!result) {
+        throw new errors.NotFoundError(`Resource ${entityId} (${entityModel}) does not exist.`)
+      } else if (result.userId !== user.id) {
         throw new errors.ForbiddenError(`User ${user.id} cannot access this resource.`)
       } else {
         ctx.request.entity = result

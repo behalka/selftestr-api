@@ -7,7 +7,8 @@ const crypto = require('../../../src/utils/crypto')
 describe('auth middleware - editor/:test_model_id endpoint', () => {
   let test
   let accessToken
-  beforeEach(async () => {
+  beforeEach(async function() {
+    this.timeout(3000)
     await resetHelper.resetDb()
     test = await helpers.testModel.create()
     accessToken = crypto.generateAccessToken(test.userId, 'behalkar')
@@ -40,8 +41,7 @@ describe('auth middleware - editor/:test_model_id endpoint', () => {
     .expect(401)
   })
   // eslint-disable-next-line func-names
-  it('returns 401 on an expired token', function(done) {
-    this.timeout(7000)
+  it('returns 401 on an expired token', done => {
     setTimeout(() => {
       request(app)
       .get(`/tests/${test.id}`)
@@ -51,7 +51,7 @@ describe('auth middleware - editor/:test_model_id endpoint', () => {
         done()
       })
     }, 5000)
-  })
+  }).timeout(7000)
   it('returns 200 with a valid token', async () => {
     const token = await crypto.generateAccessToken(test.userId, 'behalkar')
     request(app)

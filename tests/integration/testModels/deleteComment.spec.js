@@ -31,14 +31,14 @@ describe('DELETE comments/:id - delete user comment', () => {
     .expect(401)
   })
   it('sends 404 on missing comment', async () => {
-    const commentId = user.id
+    const falseCommentId = user.id
     await request(app)
-    .delete(`/comments/${commentId}`)
+    .delete(`/comments/${falseCommentId}`)
     .set({ Authorization: token })
-    .expect(403)
+    .expect(404)
   })
-  it('sends 404 on user that is not the owner comment', async () => {
-    const commentId = user.id
+  it('sends 403 on user that is not the owner comment', async () => {
+    const commentId = comment.id
     const newUser = await helpers.user.createAnother()
     const newToken = await authHelper.generateTokenFrom(newUser)
 

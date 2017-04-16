@@ -123,11 +123,14 @@ module.exports = {
     }
     return test
   },
-  createTest: async test => {
-    const owner = await db.user.findOne({ id: test.userId })
-    if (!owner) {
-      throw new errors.NotFoundError('E_NOTFOUND_TEST', `User ${test.userId} does not exist.`)
-    }
-    return db.testModel.create(test, { include: [db.questionModel] })
+  createTest: (test, user) => db.testModel.create(Object.assign({}, test, {
+    userId: user.id,
+  }), { include: [
+    { model: db.questionModel, include: [db.answerModel] },
+  ],
+  }),
+  update: (testModel, payload) => {
+    log.debug({ test: testModel.get({ plain: true }), payload }, 'testModel service - update')
+    return testModel.update(payload)
   },
 }

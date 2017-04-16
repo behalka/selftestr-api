@@ -15,24 +15,28 @@ router.post('/login', controllers.user.login)
 router.post('/users', controllers.user.register)
 router.post('/users/reset-password', controllers.user.resetPassword)
 
+/* EDITOR */
 /* Test models */
 const testModels = new Router()
 testModels.post('/', controllers.testModel.create)
-testModels.patch('/:test_id', controllers.testModel.update)
+testModels.patch('/:test_model_id', controllers.testModel.update)
+testModels.delete('/:test_model_id', controllers.testModel.delete)
 
+/* Question models */
 const questionModels = new Router()
 questionModels.get('/', controllers.questionModel.list)
 questionModels.post('/', controllers.questionModel.add)
 questionModels.put('/:question_id/answers', controllers.questionModel.setAnswers)
 questionModels.get('/:question_id', controllers.questionModel.get)
 questionModels.delete('/:question_id', controllers.questionModel.delete)
-questionModels.patch('/:question_id', controllers.questionModel.update)
+// todo: missing controller func
+questionModels.patch('/:question_id', controllers.questionModel.get)
 
 testModels.use('/:test_id/questions', questionModels.routes())
-
 router.use('/editor', middleware.auth.isLogged(), testModels.routes())
+/* EDITOR END */
 
-/* TestModels - basic */
+/* TestModels - PUBLIC */
 const tests = new Router()
 tests.get('/testModels', controllers.testModel.list)
 tests.get('/testModels/:test_id', controllers.testModel.getDetails)
@@ -43,6 +47,7 @@ tests.post('/testModels/:test_id/comments',
 // tests.delete('/testModels/:test_id/comment/:comment_id',
 //   middleware.auth.isLogged(), controllers.testModel.deleteComment)
 router.use(tests.routes())
+/* TestModels - PUBLIC end */
 
 /* Comments */
 const comments = new Router()
@@ -71,6 +76,7 @@ testInstances.post('/',
 testInstances.put('/:test_instance_id/result',
   middleware.auth.fetchUser(), controllers.testInstance.saveResults)
 router.use(testInstances.routes())
+/* Test instances END */
 
 const routes = router.routes()
 module.exports = routes

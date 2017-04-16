@@ -2,6 +2,7 @@
 const db = require('../../../src/database/index')
 const userHelper = require('./user')
 const log = require('../../../src/common/logger')
+const _ = require('lodash')
 
 const user = userHelper.getModelUser()
 const modelTest = {
@@ -54,6 +55,19 @@ const modelAnswerModels = [
 
 module.exports = {
   getModelTest: (props = {}) => Object.assign({}, modelTest, props),
+  getModelQuestion: () => {
+    const question = Object.assign({}, modelQuestionModels[0])
+    delete question.testModelId
+    let answers = _.cloneDeep(modelAnswerModels)
+    answers = answers
+      .filter(answer => answer.questionModelId === question.id)
+      .map(answer => {
+        delete answer.questionModelId
+        return answer
+      })
+    question.answerModels = answers
+    return question
+  },
   create: async () => {
     try {
       await db.user.create(user)
