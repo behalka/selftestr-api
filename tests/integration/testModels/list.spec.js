@@ -22,7 +22,7 @@ describe('GET testModels/ - list testModel', () => {
     const test = tests[0]
     expect(test).to.contain.all.keys(['id', 'name', 'created_at', 'updated_at',
       'questionsPerTestInstance', 'timeLimit', 'userId',
-      'ratingCount', 'ratingValue', 'comments'])
+      'ratingCount', 'ratingValue', 'user', 'description'])
     expect(test.name).to.equal(model.name)
   })
   // todo: sorts

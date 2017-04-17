@@ -18,6 +18,7 @@ router.post('/users/reset-password', controllers.user.resetPassword)
 /* EDITOR */
 /* Test models */
 const testModels = new Router()
+testModels.get('/', controllers.testModel.listOfUser)
 testModels.post('/', controllers.testModel.create)
 testModels.patch('/:test_model_id', controllers.testModel.update)
 testModels.delete('/:test_model_id', controllers.testModel.delete)

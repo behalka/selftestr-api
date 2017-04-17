@@ -13,7 +13,7 @@ const log = require('../common/logger')
  */
 module.exports = {
   /*
-   * Tohle je kompletni detail testModelu se vsim vsudy
+   * Tohle je testModel vcetne komentaru apod
    */
   getDetails: compose([
     async ctx => {
@@ -32,6 +32,14 @@ module.exports = {
       tests = await testService.setRatings(tests)
       ctx.status = 200
       ctx.body = tests
+    },
+  ]),
+  listOfUser: compose([
+    async ctx => {
+      const user = ctx.request.user
+      const result = await testService.listOfUser(user)
+      ctx.status = 200
+      ctx.body = result
     },
   ]),
   create: compose([

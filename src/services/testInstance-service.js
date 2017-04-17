@@ -69,7 +69,7 @@ module.exports = {
     return completeInstance
   },
   generate: async (testModelId, userId, inputQuestionsCnt) => {
-    const testModel = await testModelService.get(testModelId)
+    const testModel = await testModelService.getWithQuestions(testModelId)
     let questionsCount
     if (inputQuestionsCnt && testModel.questionModels.length >= inputQuestionsCnt) {
       questionsCount = inputQuestionsCnt

@@ -112,11 +112,33 @@ module.exports = {
     })
     return result
   },
+  listOfUser: user =>
+    db.testModel.findAll({
+      where: {
+        userId: user.id,
+      },
+      include: [
+        { model: db.questionModel, include: [db.answerModel] },
+      ],
+    }),
+  getWithQuestions: async id => {
+    const test = await db.testModel.findOne({
+      where: { id },
+      include: [
+        { model: db.comment, include: [db.user.scope('safe')] },
+        { model: db.questionModel, include: [db.answerModel] },
+        { model: db.user.scope('safe') },
+      ],
+    })
+    if (!test) {
+      throw new errors.NotFoundError('E_NOTFOUND_TEST', `Test with id ${id} does not exist.`)
+    }
+    return test
+  },
   get: async id => {
     const test = await db.testModel.findOne({
       where: { id },
       include: [
-        { model: db.questionModel, include: [db.answerModel] },
         { model: db.comment, include: [db.user.scope('safe')] },
         { model: db.user.scope('safe') },
       ],

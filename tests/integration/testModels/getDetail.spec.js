@@ -20,15 +20,15 @@ describe('GET testModels/:id - get testModel', () => {
 
     const test = res.body
     expect(test).to.contain.all.keys(
-      ['id', 'questionModels', 'comments', 'name', 'userId',
+      ['id', 'user', 'comments', 'name', 'userId',
         'questionsPerTestInstance', 'timeLimit', 'updated_at', 'created_at',
-        'ratingValue', 'ratingCount', 'description', 'comments'])
+        'ratingValue', 'ratingCount', 'description'])
     expect(test.name).to.equal(model.name)
     expect(test.timeLimit).to.equal(model.timeLimit)
     expect(test.questionsPerTestInstance).to.equal(model.questionsPerTestInstance)
     expect(test.comments).to.be.a('array')
-    expect(test.questionModels).to.be.a('array')
-    expect(test.questionModels.length).to.equal(2)
+    // expect(test.questionModels).to.be.a('array')
+    // expect(test.questionModels.length).to.equal(2)
   })
   it('returns testModel with computed ranking', async () => {
     const id = model.id
