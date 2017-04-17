@@ -48,6 +48,7 @@ module.exports = {
 
       // Known error, we threw it
       if (err instanceof errors.ApiError) {
+        log.warn(err, 'known error occured')
         return void processKnownError(ctx, err)
       }
 

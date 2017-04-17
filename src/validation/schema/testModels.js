@@ -36,6 +36,7 @@ module.exports = {
     rating: joi.number().integer().min(0).max(5).required(),
   }),
   addComment: joi.object().keys({
+    id: joi.string().guid(),
     text: joi.string().max(255).required(),
   }),
   findSortQuery: joi.object().keys({

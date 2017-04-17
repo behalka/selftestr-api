@@ -74,7 +74,10 @@ module.exports = {
   getAll: (findQuery, sortQuery) => {
     const options = buildFindQuery(findQuery, sortQuery)
     return db.testModel.findAll(Object.assign({}, options, {
-      include: [{ model: db.comment }],
+      include: [
+        // { model: db.comment },
+        { model: db.user.scope('safe') },
+      ],
     }))
   },
       // include: [{ model: db.questionModel, attributes: [] }],
@@ -114,7 +117,8 @@ module.exports = {
       where: { id },
       include: [
         { model: db.questionModel, include: [db.answerModel] },
-        { model: db.comment },
+        { model: db.comment, include: [db.user.scope('safe')] },
+        { model: db.user.scope('safe') },
       ],
     })
     if (!test) {

@@ -45,4 +45,9 @@ module.exports = (sequelize, DataTypes) =>
         user.password = await crypto.hashPassword(user.password)
       },
     },
+    scopes: {
+      safe: {
+        attributes: ['id', 'username', 'email'],
+      },
+    },
   })
