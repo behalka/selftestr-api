@@ -24,6 +24,14 @@ module.exports = {
       ctx.body = test
     },
   ]),
+  download: compose([
+    async ctx => {
+      const test = await testService.download(ctx.params.test_model_id)
+
+      ctx.status = 200
+      ctx.body = test
+    },
+  ]),
   list: compose([
     middleware.validation.validateQs(schema.testModels.findSortQuery),
     async ctx => {

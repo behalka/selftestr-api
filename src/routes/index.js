@@ -39,6 +39,7 @@ router.use('/editor', middleware.auth.isLogged(), testModels.routes())
 const tests = new Router()
 tests.get('/testModels', controllers.testModel.list)
 tests.get('/testModels/:test_id', controllers.testModel.getDetails)
+tests.get('/testModels/:test_model_id/download', controllers.testModel.download)
 tests.post('/testModels/:test_id/ratings',
   middleware.auth.isLogged(), controllers.testModel.addRating)
 tests.post('/testModels/:test_id/comments',

@@ -148,6 +148,19 @@ module.exports = {
     }
     return test
   },
+  download: async id => {
+    const test = await db.testModel.findOne({
+      where: { id },
+      include: [
+        { model: db.user.scope('safe') },
+        { model: db.questionModel, include: [db.answerModel] },
+      ],
+    })
+    if (!test) {
+      throw new errors.NotFoundError('E_NOTFOUND_TEST', `Test with id ${id} does not exist.`)
+    }
+    return test
+  },
   createTest: (test, user) => db.testModel.create(Object.assign({}, test, {
     userId: user.id,
   }), { include: [
