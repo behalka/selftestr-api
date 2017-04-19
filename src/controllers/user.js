@@ -19,7 +19,13 @@ module.exports = {
       }
       const token = await crypto.generateAccessToken(user.id, username)
       ctx.status = 200
-      ctx.body = { token }
+      ctx.body = {
+        user: {
+          id: user.id,
+          username: user.username,
+        },
+        token,
+      }
     },
   ]),
   /**
