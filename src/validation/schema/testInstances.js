@@ -2,6 +2,7 @@ const joi = require('joi')
 const questionTypes = require('../../database/enums/questionTypes')
 
 const answerInstance = joi.object().keys({
+  id: joi.string().guid(),
   text: joi.string(),
   isCorrect: joi.boolean().required(),
   correctSolution: joi.string().allow(null),
