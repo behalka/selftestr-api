@@ -70,7 +70,7 @@ module.exports = {
       const user = ctx.request.user
 
       const instance = await testService.add(Object.assign({}, payload, {
-        userId: user.id ? user.id : null,
+        userId: user ? user.id : null,
       }))
       ctx.status = 201
       ctx.body = instance
