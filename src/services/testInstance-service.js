@@ -34,6 +34,9 @@ async function saveTestInstanceResults(testUpdates) {
       include: [{ model: db.questionInstance, include: [db.answerInstance] }],
       transaction: trans,
     })
+    if (!testInstance) {
+      throw new errors.NotFoundError(`Test instance ${testUpdates.id} does not exist.`)
+    }
     testInstance.changed('updated_at', true)
     await testInstance.save({
       transaction: trans,
