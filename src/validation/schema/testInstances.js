@@ -10,6 +10,7 @@ const answerInstance = joi.object().keys({
 })
 
 const questionInstance = joi.object().keys({
+  id: joi.string().guid(),
   text: joi.string().required(),
   explanation: joi.string(),
   type: joi.any().required().allow(...questionTypes),
