@@ -3,15 +3,15 @@ const questionTypes = require('../../database/enums/questionTypes')
 
 const answerSchema = joi.object().keys({
   id: joi.string().guid(),
-  text: joi.string().required(),
+  text: joi.string().allow(null),
   isCorrect: joi.boolean().required(),
   correctSolution: joi.string(),
 })
 const updateAnswerSchema = joi.object().keys({
   id: joi.string().guid().required(),
-  text: joi.string(),
+  text: joi.string().allow(null),
   isCorrect: joi.boolean(),
-  correctSolution: joi.string(),
+  correctSolution: joi.string().allow(null),
 })
 
 module.exports = {
@@ -24,6 +24,7 @@ module.exports = {
   }),
   setAnswers: joi.array().items(answerSchema),
   updateQuestion: joi.object().keys({
+    id: joi.string().guid(),
     text: joi.string(),
     type: joi.string().allow(...questionTypes),
     explanation: joi.string(),
