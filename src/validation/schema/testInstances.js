@@ -19,6 +19,7 @@ const questionInstance = joi.object().keys({
 
 module.exports = {
   addTestInstance: joi.object().keys({
+    id: joi.string().guid(),
     userId: joi.string().guid().allow(null),
     testModelId: joi.string().guid().required(),
     name: joi.string().required(),
