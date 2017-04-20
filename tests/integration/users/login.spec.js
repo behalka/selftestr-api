@@ -15,7 +15,7 @@ describe('POST /login', () => {
     .send(user)
     .expect(200)
 
-    expect(res.body).to.have.keys(['token'])
+    expect(res.body).to.have.keys(['token', 'user'])
   })
   it('should return 400 when user payload is not valid', () => {
     const user = _.pick(helpers.user.getModelUser(), ['email', 'password'])
