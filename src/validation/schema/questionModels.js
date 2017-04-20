@@ -5,7 +5,7 @@ const answerSchema = joi.object().keys({
   id: joi.string().guid(),
   text: joi.string().allow(null),
   isCorrect: joi.boolean().required(),
-  correctSolution: joi.string(),
+  correctSolution: joi.string().allow(null),
 })
 const updateAnswerSchema = joi.object().keys({
   id: joi.string().guid().required(),
@@ -19,7 +19,7 @@ module.exports = {
     id: joi.string().guid(),
     text: joi.string().required(),
     type: joi.string().allow(...questionTypes).required(),
-    explanation: joi.string(),
+    explanation: joi.string().allow(null),
     answerModels: joi.array().items(answerSchema).required(),
   }),
   setAnswers: joi.array().items(answerSchema),
@@ -27,7 +27,7 @@ module.exports = {
     id: joi.string().guid(),
     text: joi.string(),
     type: joi.string().allow(...questionTypes),
-    explanation: joi.string(),
+    explanation: joi.string().allow(null),
     answerModels: joi.array().items(updateAnswerSchema).required(),
   }),
 }

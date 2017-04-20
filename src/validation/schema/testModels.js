@@ -19,6 +19,7 @@ const questionModel = joi.object().keys({
 
 module.exports = {
   update: joi.object().keys({
+    id: joi.string().guid(),
     name: joi.string(),
     description: joi.string(),
     questionsPerTestInstance: joi.number().integer().min(0),
@@ -29,7 +30,7 @@ module.exports = {
     name: joi.string().required(),
     description: joi.string().required(),
     questionsPerTestInstance: joi.number().integer().min(0).required(),
-    timeLimit: joi.number().integer().min(0).required(),
+    timeLimit: joi.number().integer().min(0).allow(null),
     questionModels: joi.array().items(questionModel).allow(null),
   }),
   addRating: joi.object().keys({
