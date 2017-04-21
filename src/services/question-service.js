@@ -92,7 +92,11 @@ module.exports = {
     if (!test) {
       throw new errors.NotFoundError('E_NOTFOUND_TEST', `Test id ${testId} does not exist.`)
     }
-    return db.questionModel.create(Object.assign(question, { testModelId: test.id }), {
+    const result = await db.questionModel.create(Object.assign(question, { testModelId: test.id }), {
+      include: [db.answerModel],
+    })
+    return db.questionModel.findOne({
+      where: { id: result.id },
       include: [db.answerModel],
     })
   },
