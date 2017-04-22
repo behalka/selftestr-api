@@ -42,7 +42,7 @@ module.exports = {
       // Create user record
       let profile = await userService.register(body)
       // todo: zakodovat do tokenu vse potrebne -> min db calls
-      const token = crypto.generateAccessToken(profile.id)
+      const token = crypto.generateAccessToken(profile.id, profile.username)
       profile = _.omit(profile.get({ plain: true }), 'password')
       log.info({ id: profile.id }, 'User successfully created.')
 
@@ -50,7 +50,7 @@ module.exports = {
       ctx.status = 201
       ctx.body = {
         token,
-        profile,
+        user: profile,
       }
     },
   ]),

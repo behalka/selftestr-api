@@ -23,7 +23,7 @@ module.exports = {
     name: joi.string(),
     description: joi.string(),
     questionsPerTestInstance: joi.number().integer().min(0),
-    timeLimit: joi.number().integer().min(0),
+    timeLimit: joi.number().integer().min(0).allow(null),
   }),
   create: joi.object().keys({
     id: joi.string().guid(),
