@@ -16,6 +16,7 @@
     "bcrypt": "^1.0.1",
     "bluebird": "^3.4.6",
     "bunyan": "^1.8.1",
+    "dotenv": "https://registry.npmjs.org/dotenv/-/dotenv-2.0.0.tgz",
     "istanbul": "git@github.com:gotwarlost/istanbul.git#v1.1.0-alpha.1",
     "joi": "^10.0.5",
     "jsonwebtoken": "^7.2.1",
