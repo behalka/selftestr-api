@@ -15,10 +15,11 @@ function parseToken(ctx, authorization) {
   return payload
 }
 
-async function setUser(payload) {
-  const user = await db.user.findOne({ where: {
+function setUser(payload) {
+  const user = {
     id: payload.userId,
-  } })
+    username: payload.username,
+  }
   if (!user) {
     throw new errors.UnauthorizedError()
   }
