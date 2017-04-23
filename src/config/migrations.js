@@ -13,6 +13,14 @@ module.exports = {
   },
   beta: {
     use_env_variable: 'MIGRATION_DATABASE_URL_BETA',
+    dialect: 'postgres',
+    ssl: true,
+    dialectOptions: {
+      ssl: {
+        require: true,
+      },
+    },
+
   },
   production: {
     use_env_variable: 'MIGRATION_DATABASE_URL_PROD',
