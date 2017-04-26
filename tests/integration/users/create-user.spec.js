@@ -14,11 +14,11 @@ describe('POST /users - register a user', () => {
     .send(user)
     .expect(201)
 
-    expect(res.body).to.have.keys(['token', 'profile'])
-    expect(res.body.profile).to.include.keys(['id', 'email', 'createdAt', 'updatedAt', 'username'])
-    expect(res.body.profile).to.not.include.keys(['password'])
-    expect(res.body.profile.email).to.equal(user.email)
-    expect(res.body.profile.username).to.equal(user.username)
+    expect(res.body).to.have.keys(['token', 'user'])
+    expect(res.body.user).to.include.keys(['id', 'email', 'createdAt', 'updatedAt', 'username'])
+    expect(res.body.user).to.not.include.keys(['password'])
+    expect(res.body.user.email).to.equal(user.email)
+    expect(res.body.user.username).to.equal(user.username)
   })
   it('should return 400 when user payload is not valid', () => {
     const user = _.omit(helpers.user.getModelUser(), ['id', 'password'])

@@ -9,7 +9,13 @@ module.exports = {
    * @returns {Object} Database user record.
    */
   register: async user => {
-    const conflictUser = await db.user.findOne({ where: { email: user.email } })
+    const conflictUser = await db.user.findOne({ where: {
+      $or: [
+        { username: user.username },
+        { email: user.email },
+      ],
+    },
+    })
     if (conflictUser) {
       log.warn({ conflictUserId: conflictUser.id }, 'User conflict appeared during sign up.')
       throw new errors.ConflictError('E_CONFLICT_USER')
