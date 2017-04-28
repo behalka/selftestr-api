@@ -82,6 +82,7 @@ module.exports = {
       log.warn('questionsPerInstance is bigger than actual count that is stored')
     } else {
       // fallback ke VSEM otazkam v testu
+      log.warn('questionsPerInstance is not set, falling back to maximum.')
       questionsCount = testModel.questionModels.length
     }
     const testInstanceData = Object.assign({},

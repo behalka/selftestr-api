@@ -21,8 +21,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     questionsPerTestInstance: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 10,
+      allowNull: true,
+      defaultValue: null,
       field: 'questions_per_test_instance',
     },
     timeLimit: {

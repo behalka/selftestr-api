@@ -2,16 +2,12 @@
 
 module.exports = {
   up(queryInterface, Sequelize) {
-    return queryInterface.changeColumn('test_instance', 'test_model_id', {
-      type: Sequelize.UUID,
-      allowNull: true,
-      references: {
-        model: 'test_model',
-        key: 'id',
-      },
-      onDelete: 'SET NULL',
-      onUpdate: 'CASCADE',
-    })
+    return Promise.resolve()
+    // fixme: napsat pomoci sql
+    // return queryInterface.changeColumn('test_instance', 'test_model_id', {
+    //   type: Sequelize.UUID,
+    //   allowNull: true,
+    // })
   },
   down(queryInterface) {
     return queryInterface.dropTable('test_instance')
