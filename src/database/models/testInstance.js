@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) =>
     },
     testModelId: {
       type: DataTypes.UUID,
-      allowNull: false,
+      allowNull: true,
       field: 'test_model_id',
     },
   }, {
