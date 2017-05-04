@@ -1,5 +1,13 @@
 # selftestr-api
 
+## Instalace a spuštění aplikace:
+
+``` bash
+  $ docker-compose up
+  $ npm install
+  $ ./bin/run
+```
+
 ## Jak rozchodit aktuální verzi databáze:
 
 - migrace:
