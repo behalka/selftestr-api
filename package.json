@@ -1,7 +1,7 @@
 {
   "name": "selftestr-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "An API for the Selftester project :)",
   "main": "src/server.js",
   "engines": {
     "node": "~8.1",
